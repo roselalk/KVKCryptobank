@@ -22,9 +22,9 @@ public class JdbcBankAccountDAO implements BankAccountDAO {
     }
 
     @Override
-    public BankAccount getBankAccount(Trader trader) {
+    public BankAccount getBankAccount(int idTrader) {
         String sql = "Select * from BankAccount Where idTrader = ?";
-        List<BankAccount> resultList = jdbcTemplate.query(sql, new BankAccountRowMapper(trader), trader);
+        List<BankAccount> resultList = jdbcTemplate.query(sql, new BankAccountRowMapper(), idTrader);
         if (resultList.isEmpty()) {
             return null;
         } else {
@@ -34,7 +34,7 @@ public class JdbcBankAccountDAO implements BankAccountDAO {
     }
 
     @Override
-    public void create(BankAccount bankAccount) {
+    public void createBankAccount(BankAccount bankAccount) {
         String sql = "INSERT INTO  BankAccount (idTrader, Saldo, SaldoDateTime, IBAN) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, bankAccount.getTrader().getID(),
                 bankAccount.getSaldo(),
@@ -42,20 +42,20 @@ public class JdbcBankAccountDAO implements BankAccountDAO {
                 bankAccount.getIban());
     }
 
+    @Override
+    public void deleteBankAccount(BankAccount bankAccount){
+        String sql = "DELETE FROM BankAccount WHERE idTrader = ?;";
+        jdbcTemplate.update(sql, bankAccount.getTrader().getID());
+    }
+
 
     // ROWMAPPER
 
     private class BankAccountRowMapper implements RowMapper<BankAccount> {
 
-        private Trader trader;
-
-        public BankAccountRowMapper(Trader trader) {
-            this.trader = trader;
-        }
-
         @Override
         public BankAccount mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            return new BankAccount(trader, resultSet.getDouble("Saldo"),
+            return new BankAccount(resultSet.getDouble("Saldo"),
                     resultSet.getString("SaldoDateTime"), resultSet.getString("IBAN"));
         }
     }

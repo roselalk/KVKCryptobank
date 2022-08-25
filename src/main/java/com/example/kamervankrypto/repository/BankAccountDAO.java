@@ -6,9 +6,12 @@ import com.example.kamervankrypto.model.Trader;
 
 public interface BankAccountDAO {
 
-    BankAccount getBankAccount(Trader trader);
+    BankAccount getBankAccount(int idTrader);
 
-    default void create(BankAccount bankAccount){
+    default void createBankAccount(BankAccount bankAccount){
+    }
+
+    default void deleteBankAccount(BankAccount bankAccount){
     }
 
 }

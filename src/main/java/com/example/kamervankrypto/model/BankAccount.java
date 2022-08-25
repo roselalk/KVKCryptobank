@@ -28,6 +28,12 @@ public class BankAccount {
         this.iban = createNewIBAN();
     }
 
+    public BankAccount(double saldo, String saldoDateTime, String iban) {
+        this.saldo = saldo;
+        this.saldoDateTime = saldoDateTime;
+        this.iban = iban;
+        this.trader = null;
+    }
 
     // METHODS
 
