@@ -40,7 +40,7 @@ public class BankAccountController {
         //return bankAccountService.getBankSaldo(id);
     }
 
-    @PostMapping (value = "/create/{startSaldo}") // zelfde URL als de GET request, maar doet toch iets anders!
+    @PutMapping (value = "/create/{startSaldo}") // zelfde URL als de GET request, maar doet toch iets anders!
     BankAccount createBankAccount(@RequestBody Trader trader, @PathVariable("startSaldo") double startSaldo) {
         bankAccountService.createBankAccount(trader, startSaldo);
         return bankAccountService.getBankAccount(trader);
@@ -53,7 +53,7 @@ public class BankAccountController {
         return bankAccountService.getBankAccount(bankAccount.getTrader());
     }
 
-    @GetMapping
+    @PostMapping(value = "/delete")
     void deleteBankAccount(@RequestBody Trader trader) {
         bankAccountService.deleteBankAccount(bankAccountService.getBankAccount(trader));
     }
