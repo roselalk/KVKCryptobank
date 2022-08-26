@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JdbcAssetDAO implements AssetDAO {
@@ -22,36 +23,28 @@ public class JdbcAssetDAO implements AssetDAO {
 
     @Override
     public List<Asset> getAll() {
-        String sql = "Select * From Asset";
+        String sql = "Select * From Asset;";
         return jdbcTemplate.query(sql, new AssetRowMapper());
     }
 
     @Override
-    public Asset findByTicker(String ticker) {
-        String sql = "Select * From Asset Where Abbreviation = ?";
-        return jdbcTemplate.queryForObject(sql, new AssetRowMapper(), ticker);
+    public Asset getByTicker(String ticker) {
+        String sql = "Select * From Asset Where Ticker = ?;";
+        List<Asset> resultList = jdbcTemplate.query(sql, new AssetRowMapper(), ticker);
+        return resultList.get(0);
     }
 
     @Override
-    public Asset findByName(String name) {
-        String sql = "Select * From Asset Where Name = ?";
-        return jdbcTemplate.queryForObject(sql, new AssetRowMapper(), name);
-    }
-
-    @Override
-    public void save(Asset asset) {
-
-    }
-
-    @Override
-    public void update(Asset asset) {
-
+    public Asset getByName(String name) {
+        String sql = "Select * From Asset Where Name = ?;";
+        List<Asset> resultList = jdbcTemplate.query(sql, new AssetRowMapper(), name);
+        return resultList.get(0);
     }
 
     private class AssetRowMapper implements RowMapper<Asset> {
         @Override
         public Asset mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            return new Asset(resultSet.getString("Abbreviation"), resultSet.getString("Name"));
+            return new Asset(resultSet.getString("Ticker"), resultSet.getString("Name"));
         }
     }
 }
