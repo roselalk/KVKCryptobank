@@ -8,8 +8,6 @@ import com.example.kamervankrypto.repository.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
-
 @Service
 public class BankAccountService {
 
@@ -33,7 +31,7 @@ public class BankAccountService {
     }
 
     public void changeBankSaldo(BankAccount bankAccount, double changeSaldo) {
-        bankAccount.setSaldoDateTime(DateTime.toString());
+        bankAccount.setSaldoDateTime(BankAccount.getCurrentDateTime());
         bankAccount.setSaldo(bankAccount.getSaldo() + changeSaldo);
         bankAccountDAO.createBankAccount(bankAccount); // Every change is an addition to the MySQL table with a DateTime change, therefore create!
     }

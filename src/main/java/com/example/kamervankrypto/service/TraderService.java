@@ -31,5 +31,7 @@ public class TraderService {
         return traderDAO.getTraderByName(name);
     }
 
+    //TODO method fillDatabase (generate random users)
+
 
 }
