@@ -15,7 +15,7 @@ public interface TransactionDAO {
 
     void save(Transaction transaction);
 
-    Transaction getTransactionBySeller(Trader seller);
+    List<Transaction> getTransactionBySeller(Trader seller);
 
-    Transaction getTransactionByBuyer(Trader buyer);
+    List<Transaction> getTransactionByBuyer(Trader buyer);
 }

@@ -68,6 +68,18 @@ public class Transaction {
     }
 
     @Override
+    public String toString() {
+        return "Transaction{" +
+                "idTransaction=" + idTransaction +
+                ", Amount1=" + Amount1 +
+                ", transactionFee=" + transactionFee +
+                ", buyer=" + buyer +
+                ", seller=" + seller +
+                ", asset=" + asset +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
