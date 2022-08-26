@@ -1,5 +1,6 @@
 package com.example.kamervankrypto.repository;
 
+import com.example.kamervankrypto.model.BankAccount;
 import com.example.kamervankrypto.model.Trader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,8 +9,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -95,16 +96,13 @@ public class JdbcTraderDAO implements TraderDAO {
 
     private class TraderRowMapper implements RowMapper<Trader> {
         @Override
-        public Trader mapRow(ResultSet resultSet, int rowNumer) throws SQLException {
-            try {
+        public Trader mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+            DateTimeFormatter dateFormat = Trader.DATEFORMAT;
                 return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
                         resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
-                        resultSet.getInt("BSN"), new SimpleDateFormat("dd-MM-yyyy").parse(resultSet.getString("Birthdate")), resultSet.getString("Adress"),
+                        resultSet.getInt("BSN"), LocalDate.parse(resultSet.getString("Birthdate"), dateFormat), resultSet.getString("Adress"),
                         resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
                         resultSet.getBoolean("Inactive"));
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 

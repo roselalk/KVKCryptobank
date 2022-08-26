@@ -1,6 +1,7 @@
 package com.example.kamervankrypto.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Trader {
@@ -12,16 +13,17 @@ public class Trader {
     private String prefix;
     private String name;
     private int BSN;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String street;
     private String houseNumber;
     private String zipCode;
     private String city;
     private boolean isActive;
+    public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 
     public Trader(int ID, String email, String password, String firstName, String prefix, String name, int BSN,
-                  Date dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive) {
+                  LocalDate dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive) {
         this.ID = ID;
         this.email = email;
         this.password = password;
@@ -93,11 +95,11 @@ public class Trader {
         this.BSN = BSN;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -140,6 +142,7 @@ public class Trader {
     public void setActive(boolean active) {
         isActive = active;
     }
+
 
     @Override
     public String toString() {return firstName + " " + prefix + " " + name + ", ID " + ID;}
