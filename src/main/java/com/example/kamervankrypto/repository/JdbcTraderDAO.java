@@ -24,7 +24,7 @@ public class JdbcTraderDAO implements TraderDAO {
     //TODO
     private PreparedStatement insertTraderStatement(Trader trader, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement("insert into KamerVanKrypto.Trader (idTrader, Password," +
-                "FirstName, Prefix, Name, BSN, Birthdate, Adress, Number, PostalCode, City, Email, Inactive) values " +
+                "FirstName, Prefix, Name, BSN, Birthdate, Adress, Number, PostalCode, City, Email, Active) values " +
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, trader.getID());
         ps.setString(2, trader.getPassword());
@@ -84,7 +84,7 @@ public class JdbcTraderDAO implements TraderDAO {
     @Override
     public void update(Trader trader) {
         String sql = "UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
-                "Number = ?, PostalCode = ?, City = ?, Email = ?, Inactive = ?";
+                "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ?";
         jdbcTemplate.update(sql, new TraderRowMapper());
     }
 
@@ -102,7 +102,7 @@ public class JdbcTraderDAO implements TraderDAO {
                         resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
                         resultSet.getInt("BSN"), LocalDate.parse(resultSet.getString("Birthdate"), dateFormat), resultSet.getString("Adress"),
                         resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
-                        resultSet.getBoolean("Inactive"));
+                        resultSet.getBoolean("Active"));
         }
     }
 
