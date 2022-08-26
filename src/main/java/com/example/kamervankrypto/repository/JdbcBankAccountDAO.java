@@ -1,12 +1,18 @@
 package com.example.kamervankrypto.repository;
 
 import com.example.kamervankrypto.model.BankAccount;
+import com.example.kamervankrypto.model.Trader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 @Repository
-public class JdbcBankAccountDAO implements BankAccountDAO{
+public class JdbcBankAccountDAO implements BankAccountDAO {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -16,17 +22,42 @@ public class JdbcBankAccountDAO implements BankAccountDAO{
     }
 
     @Override
-    public BankAccount getBankAccount(int id) {
-        return null;
+    public BankAccount getBankAccount(int idTrader) {
+        String sql = "Select * from BankAccount Where idTrader = ?";
+        List<BankAccount> resultList = jdbcTemplate.query(sql, new BankAccountRowMapper(), idTrader);
+        if (resultList.isEmpty()) {
+            return null;
+        } else {
+            return resultList.get(resultList.size()-1); // return last one, this has the correct (most recent) Saldo.
+        }
+
     }
 
     @Override
-    public int getBankSaldo(int id) {
-        return 0;
+    public void createBankAccount(BankAccount bankAccount) {
+        String sql = "INSERT INTO  BankAccount (idTrader, Saldo, SaldoDateTime, IBAN) VALUES (?,?,?,?)";
+        jdbcTemplate.update(sql, bankAccount.getTrader().getID(),
+                bankAccount.getSaldo(),
+                bankAccount.getSaldoDateTime(),
+                bankAccount.getIban());
     }
 
     @Override
-    public void save(BankAccount bankAccount) {
-        BankAccountDAO.super.save(bankAccount);
+    public void deleteBankAccount(BankAccount bankAccount){
+        String sql = "DELETE FROM BankAccount WHERE idTrader = ?;";
+        jdbcTemplate.update(sql, bankAccount.getTrader().getID());
     }
+
+
+    // ROWMAPPER
+
+    private class BankAccountRowMapper implements RowMapper<BankAccount> {
+
+        @Override
+        public BankAccount mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+            return new BankAccount(resultSet.getDouble("Saldo"),
+                    resultSet.getString("SaldoDateTime"), resultSet.getString("IBAN"));
+        }
+    }
+
 }
