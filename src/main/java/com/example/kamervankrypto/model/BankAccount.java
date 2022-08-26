@@ -13,7 +13,6 @@ public class BankAccount {
 //    private String saldoDateTime;
     private LocalDateTime saldoDateTime;
     private String iban;
-    //private static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
 
@@ -32,8 +31,6 @@ public class BankAccount {
         this.saldoDateTime = getCurrentDateTime();
         this.iban = createNewIBAN();
     }
-
-
 
     public BankAccount(double saldo, LocalDateTime saldoDateTime, String iban) {
         this.saldo = saldo;
