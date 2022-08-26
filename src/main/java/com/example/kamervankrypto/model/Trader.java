@@ -141,6 +141,9 @@ public class Trader {
         isActive = active;
     }
 
+    @Override
+    public String toString() {return firstName + " " + prefix + " " + name + ", ID " + ID;}
+
 
     @Override
     public boolean equals(Object o) {
