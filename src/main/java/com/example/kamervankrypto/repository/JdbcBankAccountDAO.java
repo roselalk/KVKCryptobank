@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -55,8 +59,11 @@ public class JdbcBankAccountDAO implements BankAccountDAO {
 
         @Override
         public BankAccount mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+            DateTimeFormatter dateFormat = BankAccount.getDATEFORMAT();
+
             return new BankAccount(resultSet.getDouble("Saldo"),
-                    resultSet.getString("SaldoDateTime"), resultSet.getString("IBAN"));
+                        LocalDateTime.parse(resultSet.getString("SaldoDateTime"), dateFormat),
+                        resultSet.getString("IBAN"));
         }
     }
 
