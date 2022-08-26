@@ -32,7 +32,7 @@ public class JdbcTraderDAO implements TraderDAO {
         ps.setString(4, trader.getPrefix());
         ps.setString(5, trader.getName());
         ps.setInt(6, trader.getBSN());
-        ps.setString(7, String.valueOf(trader.getDateOfBirth()));
+        ps.setString(7, trader.getDateOfBirth());
         ps.setString(8, trader.getStreet());
         ps.setString(9, trader.getHouseNumber());
         ps.setString(10, trader.getZipCode());
@@ -97,10 +97,9 @@ public class JdbcTraderDAO implements TraderDAO {
     private class TraderRowMapper implements RowMapper<Trader> {
         @Override
         public Trader mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            DateTimeFormatter dateFormat = Trader.DATEFORMAT;
                 return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
                         resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
-                        resultSet.getInt("BSN"), LocalDate.parse(resultSet.getString("Birthdate"), dateFormat), resultSet.getString("Adress"),
+                        resultSet.getInt("BSN"), resultSet.getString("Birthdate"), resultSet.getString("Adress"),
                         resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
                         resultSet.getBoolean("Active"));
         }
