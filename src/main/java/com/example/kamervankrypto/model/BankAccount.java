@@ -7,27 +7,33 @@ import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 
 public class BankAccount {
 
-    private int idTrader;
+    private Trader trader;
     private double saldo;
     private String saldoDateTime;
     private String iban;
 
     // CONSTRUCTORS
 
-    public BankAccount(int idTrader, double saldo, String saldoDateTime, String iban) {
-        this.idTrader = idTrader;
+    public BankAccount(Trader trader, double saldo, String saldoDateTime, String iban) {
+        this.trader = trader;
         this.saldo = saldo;
         this.saldoDateTime = saldoDateTime;
         this.iban = iban;
     }
 
-    public BankAccount(int idTrader, double saldo) {
-        this.idTrader = idTrader;
+    public BankAccount(Trader trader, double saldo) {
+        this.trader = trader;
         this.saldo = saldo;
         this.saldoDateTime = DateTime.toString();
         this.iban = createNewIBAN();
     }
 
+    public BankAccount(double saldo, String saldoDateTime, String iban) {
+        this.saldo = saldo;
+        this.saldoDateTime = saldoDateTime;
+        this.iban = iban;
+        this.trader = null;
+    }
 
     // METHODS
 
@@ -53,7 +59,7 @@ public class BankAccount {
     @Override
     public String toString() {
         return "BankAccount{" +
-                "idTrader=" + idTrader +
+                "trader=" + trader +
                 ", saldo=" + saldo +
                 ", saldoDateTime='" + saldoDateTime + '\'' +
                 ", iban='" + iban + '\'' +
@@ -65,23 +71,23 @@ public class BankAccount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BankAccount that = (BankAccount) o;
-        return idTrader == that.idTrader && Double.compare(that.saldo, saldo) == 0 && saldoDateTime.equals(that.saldoDateTime) && iban.equals(that.iban);
+        return Double.compare(that.saldo, saldo) == 0 && trader.equals(that.trader) && saldoDateTime.equals(that.saldoDateTime) && iban.equals(that.iban);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTrader, saldo, saldoDateTime, iban);
+        return Objects.hash(trader, saldo, saldoDateTime, iban);
     }
 
+// GETTERS AND SETTERS
 
-    // GETTERS AND SETTERS
 
-    public int getIdTrader() {
-        return idTrader;
+    public Trader getTrader() {
+        return trader;
     }
 
-    public void setIdTrader(int idTrader) {
-        this.idTrader = idTrader;
+    public void setTrader(Trader trader) {
+        this.trader = trader;
     }
 
     public double getSaldo() {
