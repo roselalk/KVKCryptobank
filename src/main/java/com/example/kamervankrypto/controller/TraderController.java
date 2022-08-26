@@ -27,7 +27,7 @@ public class TraderController {
         return traderService.getAll();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/user/{id}")
     @ResponseBody
     Trader getTraderById(@PathVariable("id") String id) {
         Optional<Trader> trader = Optional.ofNullable(traderService.getById(id));
@@ -37,7 +37,6 @@ public class TraderController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trader found with this ID!");
         }
     }
-
 
     @PostMapping
     @ResponseBody
