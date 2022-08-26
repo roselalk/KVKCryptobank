@@ -8,6 +8,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Repository
@@ -85,15 +87,24 @@ public class JdbcTraderDAO implements TraderDAO {
         jdbcTemplate.update(sql, new TraderRowMapper());
     }
 
+    @Override
+    public void delete(int id) {
+        String sql = "DELETE FROM Trader WHERE idTrader = ?";
+        jdbcTemplate.update(sql, new TraderRowMapper());
+    }
 
     private class TraderRowMapper implements RowMapper<Trader> {
         @Override
         public Trader mapRow(ResultSet resultSet, int rowNumer) throws SQLException {
-            return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
-                    resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
-                    resultSet.getInt("BSN"), resultSet.getDate("Birthdate"), resultSet.getString("Adress"),
-                    resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
-                    resultSet.getBoolean("Inactive"));
+            try {
+                return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
+                        resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
+                        resultSet.getInt("BSN"), new SimpleDateFormat("dd-MM-yyyy").parse(resultSet.getString("Birthdate")), resultSet.getString("Adress"),
+                        resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
+                        resultSet.getBoolean("Inactive"));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
