@@ -31,5 +31,10 @@ public class TraderService {
         return traderDAO.getTraderByName(name);
     }
 
+    public void delete(int ID) {
+        traderDAO.delete(ID);
+    }
+
+
 
 }

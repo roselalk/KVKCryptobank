@@ -2,15 +2,16 @@ package com.example.kamervankrypto.repository;
 
 
 import com.example.kamervankrypto.model.BankAccount;
+import com.example.kamervankrypto.model.Trader;
 
 public interface BankAccountDAO {
 
-    BankAccount getBankAccount(int id);
+    BankAccount getBankAccount(int idTrader);
 
-    int getBankSaldo(int id);
+    default void createBankAccount(BankAccount bankAccount){
+    }
 
-    default void save(BankAccount bankAccount){
-
+    default void deleteBankAccount(BankAccount bankAccount){
     }
 
 }
