@@ -13,17 +13,16 @@ public class Trader {
     private String prefix;
     private String name;
     private int BSN;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
     private String street;
     private String houseNumber;
     private String zipCode;
     private String city;
     private boolean isActive;
-    public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 
     public Trader(int ID, String email, String password, String firstName, String prefix, String name, int BSN,
-                  LocalDate dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive) {
+                  String dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive) {
         this.ID = ID;
         this.email = email;
         this.password = password;
@@ -95,11 +94,11 @@ public class Trader {
         this.BSN = BSN;
     }
 
-    public LocalDate getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
