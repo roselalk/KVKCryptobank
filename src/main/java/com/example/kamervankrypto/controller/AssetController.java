@@ -24,25 +24,20 @@ public class AssetController {
 
     @GetMapping
     @ResponseBody
-    List<Asset> getAssetsWithCurrentRate() {
+    List<Asset> getAll() {
+        return assetService.getAll();
+    }
+
+    @RequestMapping(value = "/rates")
+    List<Asset> getAllWithCurrenRates(){
         return assetService.getAllWithCurrentRate();
     }
 
-    @GetMapping(value = "/ticker/{ticker}")
-    Asset getAssetByTicker(@PathVariable("ticker") String ticker) {
-        Optional<Asset> asset = Optional.ofNullable(assetService.getByTickerWithCurrentRate(ticker));
-        if (asset.isPresent()) {
-            return asset.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found!");
-        }
-    }
-
-    @GetMapping(value = "/name/{name}")
+    @GetMapping(value = "/{name}")
     Asset getAssetByName(@PathVariable("name") String name) {
-        Optional<Asset> asset = Optional.ofNullable(assetService.getByNameWithCurrentRate(name));
-        if (asset.isPresent()) {
-            return asset.get();
+        Asset asset = assetService.getByNameWithCurrentRate(name);
+        if (asset != null) {
+            return asset;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found!");
         }

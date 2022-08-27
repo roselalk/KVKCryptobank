@@ -16,6 +16,10 @@ public class AssetRepository {
         this.rateDAO = rateDAO;
     }
 
+    public List<Asset> getAll() {
+        return assetDAO.getAll();
+    }
+
     public List<Asset> getAllWithCurrentRate() {
         List<Asset> assetList = assetDAO.getAll();
         for (Asset a : assetList) {
