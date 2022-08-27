@@ -23,20 +23,20 @@ public class JdbcAssetDAO implements AssetDAO {
 
     @Override
     public List<Asset> getAll() {
-        String sql = "Select * From Asset;";
+        String sql = "SELECT * FROM Asset;";
         return jdbcTemplate.query(sql, new AssetRowMapper());
     }
 
     @Override
     public Asset getByTicker(String ticker) {
-        String sql = "Select * From Asset Where Ticker = ?;";
+        String sql = "SELECT * FROM Asset WHERE Ticker = ?;";
         List<Asset> resultList = jdbcTemplate.query(sql, new AssetRowMapper(), ticker);
         return resultList.get(0);
     }
 
     @Override
     public Asset getByName(String name) {
-        String sql = "Select * From Asset Where Name = ?;";
+        String sql = "SELECT * FROM Asset WHERE Name = ?;";
         List<Asset> resultList = jdbcTemplate.query(sql, new AssetRowMapper(), name);
         return resultList.get(0);
     }
