@@ -31,6 +31,7 @@ public class BankAccountRepositoryTest {
         Date birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(sBirthDate);
 
         LocalDateTime dateNow = LocalDateTime.now();
+        System.out.println(dateNow);
         DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         mockTrader = new Trader(1, "a@b.com", "Password", "Piet1", "de", "Weetikniet1", 123456789, birthDate, "Straat", "5a", "1234ab", "Stadje", true);

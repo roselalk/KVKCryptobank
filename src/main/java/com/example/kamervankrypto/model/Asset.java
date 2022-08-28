@@ -1,11 +1,14 @@
 package com.example.kamervankrypto.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Asset {
 
     private String ticker;
     private String name;
+    private Rate rate;
+    private List<Rate> historicalRates;
 
     public Asset(String ticker, String name) {
         this.ticker = ticker;
@@ -28,6 +31,22 @@ public class Asset {
         this.name = name;
     }
 
+    public Rate getRate() {
+        return rate;
+    }
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+
+    public List<Rate> getHistoricalRates() {
+        return historicalRates;
+    }
+
+    public void setHistoricalRates(List<Rate> historicalRates) {
+        this.historicalRates = historicalRates;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +64,7 @@ public class Asset {
         return "Asset{" +
                 "ticker='" + ticker + '\'' +
                 ", name='" + name + '\'' +
+                ", rate=" + rate +
                 '}';
     }
 }
