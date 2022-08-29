@@ -7,7 +7,7 @@ public class Rate {
     private int rateId;
     private double value;
     private String date;
-    private String ticker;
+    private Asset pair;
 
 
     public Rate(int rateId, double value, String date) {
@@ -40,12 +40,12 @@ public class Rate {
         this.date = date;
     }
 
-    public String getTicker() {
-        return ticker;
+    public Asset getPair() {
+        return pair;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setPair(Asset pair) {
+        this.pair = pair;
     }
 
     @Override
@@ -65,7 +65,6 @@ public class Rate {
         return "Rate{" +
                 "value=" + value +
                 ", date='" + date + '\'' +
-                ", ticker='" + ticker + '\'' +
                 '}';
     }
 }

@@ -12,4 +12,6 @@ public interface AssetDAO {
     Asset getByTicker(String ticker);
 
     Asset getByName(String name);
+
+    void store(Asset asset);
 }
