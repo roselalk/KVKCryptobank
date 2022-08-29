@@ -45,8 +45,8 @@ public class TransactionRepository {
         @Override
         public Transaction mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
             Transaction t = transactionDAO.findById(resultSet.getInt("idTransaction"));
-            t.setBuyer(traderDAO.findById(String.valueOf(resultSet.getInt("idBuyer"))));
-            t.setSeller(traderDAO.findById(String.valueOf(resultSet.getInt("idSeller"))));
+            t.setBuyer(traderDAO.findById(resultSet.getInt("idBuyer")));
+            t.setSeller(traderDAO.findById(resultSet.getInt("idSeller")));
             t.setAsset(assetDAO.getByTicker(resultSet.getString("Ticker")));
             return t;
         }
