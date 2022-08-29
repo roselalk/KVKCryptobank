@@ -12,7 +12,7 @@ public class BankAccount {
     private double saldo;
     private String saldoDateTime;
     private String iban;
-    private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
     // CONSTRUCTORS
