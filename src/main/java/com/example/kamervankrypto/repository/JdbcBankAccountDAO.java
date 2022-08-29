@@ -59,14 +59,10 @@ public class JdbcBankAccountDAO implements BankAccountDAO {
 
         @Override
         public BankAccount mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            //DateTimeFormatter dateFormat = BankAccount.getDATEFORMAT();
 
             return new BankAccount(resultSet.getDouble("Saldo"),
                         resultSet.getString("SaldoDateTime"),
                         resultSet.getString("IBAN"));
-//            return new BankAccount(resultSet.getDouble("Saldo"),
-//                        LocalDateTime.parse(resultSet.getString("SaldoDateTime"), dateFormat),
-//                        resultSet.getString("IBAN"));
         }
     }
 

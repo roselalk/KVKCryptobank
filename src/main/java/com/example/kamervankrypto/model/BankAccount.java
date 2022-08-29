@@ -10,7 +10,6 @@ public class BankAccount {
 
     private Trader trader;
     private double saldo;
-//    private String saldoDateTime;
     private String saldoDateTime;
     private String iban;
     private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -43,7 +42,7 @@ public class BankAccount {
 
     public static LocalDateTime getCurrentDateTime() {
         LocalDateTime dateTimeNow = LocalDateTime.now();
-        System.out.println(dateTimeNow);
+        //System.out.println(dateTimeNow);
 
         // EEN KORTE TEST OM MET LOCALDATETIME TE REKENEN. DEZE METHODE WERKT
 //        LocalDateTime BirthDate = LocalDateTime.of(1984, 4, 25, 10, 10, 25);
