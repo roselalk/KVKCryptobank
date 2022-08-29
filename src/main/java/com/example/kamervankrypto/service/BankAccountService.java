@@ -31,7 +31,7 @@ public class BankAccountService {
     }
 
     public void changeBankSaldo(BankAccount bankAccount, double changeSaldo) {
-        bankAccount.setSaldoDateTime(BankAccount.getCurrentDateTime());
+        bankAccount.setSaldoDateTime(BankAccount.getCurrentDateTime().toString());
         bankAccount.setSaldo(bankAccount.getSaldo() + changeSaldo);
         bankAccountDAO.createBankAccount(bankAccount); // Every change is an addition to the MySQL table with a DateTime change, therefore create!
     }
