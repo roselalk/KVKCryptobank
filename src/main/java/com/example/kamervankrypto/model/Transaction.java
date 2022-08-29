@@ -6,17 +6,29 @@ public class Transaction {
     private int idTransaction;
     private double Amount1;
     private double transactionFee;
+    private String transactionDateTime;
     private Trader buyer;
     private Trader seller;
     private Asset asset;
 
-    public Transaction(int idTransaction, double amount1, double transactionFee, Trader buyer, Trader seller, Asset asset) {
+    public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime, Trader buyer, Trader seller, Asset asset) {
         this.idTransaction = idTransaction;
         this.Amount1 = amount1;
         this.transactionFee = transactionFee;
+        this.transactionDateTime =transactionDateTime;
         this.buyer = buyer;
         this.seller = seller;
         this.asset = asset;
+    }
+
+    public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime) {
+        this.idTransaction = idTransaction;
+        this.Amount1 = amount1;
+        this.transactionFee = transactionFee;
+        this.transactionDateTime =transactionDateTime;
+        this.buyer = null;
+        this.seller = null;
+        this.asset = null;
     }
 
     public int getIdTransaction() {

@@ -26,7 +26,7 @@ public class TransactionController {
 
     @GetMapping(value = "/{idTransaction}")
     @ResponseBody
-    Transaction getTraderById(@PathVariable("idTransaction") String id) {
+    Transaction getTraderById(@PathVariable("idTransaction") int id) {
         Optional<Transaction> transaction = Optional.ofNullable(transactionService.getById(id));
         if (transaction.isPresent()) {
             return transaction.get();

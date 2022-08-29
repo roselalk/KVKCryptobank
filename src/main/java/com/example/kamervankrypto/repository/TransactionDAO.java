@@ -9,13 +9,13 @@ public interface TransactionDAO {
 
     List<Transaction> findAll();
 
-    Transaction findById(String idTransaction);
+    Transaction findById(int idTransaction);
 
     void update(Transaction transaction);
 
     void save(Transaction transaction);
 
-    Transaction getTransactionBySeller(Trader seller);
+    List<Transaction> getTransactionByBuyerId(int idBuyer);
 
-    Transaction getTransactionByBuyer(Trader buyer);
+    List<Transaction> getTransactionBySellerId(int idSeller);
 }
