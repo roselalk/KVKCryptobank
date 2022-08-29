@@ -2,6 +2,7 @@ package com.example.kamervankrypto.controller;
 
 
 import com.example.kamervankrypto.model.Asset;
+import com.example.kamervankrypto.model.Rate;
 import com.example.kamervankrypto.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,19 +29,26 @@ public class AssetController {
         return assetService.getAll();
     }
 
-    @RequestMapping(value = "/rates")
-    List<Asset> getAllWithCurrenRates(){
+    @GetMapping(value = "/rates")
+    List<Asset> getAllWithCurrenRates() {
         return assetService.getAllWithCurrentRate();
     }
 
-    @GetMapping(value = "/{name}")
-    Asset getAssetByName(@PathVariable("name") String name) {
-        Asset asset = assetService.getByNameWithCurrentRate(name);
-        if (asset != null) {
-            return asset;
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found!");
-        }
+    @GetMapping(value = "/{ticker}")
+    Asset getByTickerWithCurrentRate(@PathVariable("ticker") String ticker) {
+        return assetService.getByTickerWithCurrentRate(ticker);
+    }
+
+    @GetMapping(value = "/rates/historical")
+    List<Asset> getAllWithAll() {
+        return assetService.getAllWithAllRates();
+    }
+
+    @GetMapping(value = "/find")
+    @ResponseBody
+    Asset getByNameWithCurrentRate(@RequestParam("Name") String name) {
+        return assetService.getByNameWithCurrentRate(name);
     }
 
 }
+
