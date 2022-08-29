@@ -4,6 +4,7 @@ import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -46,12 +47,54 @@ public class TraderController {
         return traderService.getAll();
     }
 
+    @PostMapping(value = "/update")
+    @ResponseBody
+    List<Trader> updateTrader(@RequestBody Trader trader) {
+        traderService.upate(trader);
+        return traderService.getAll();
+    }
+
+    @PutMapping ("/update/{id}")
+    public ResponseEntity<Trader> updateTrader(@PathVariable("id") String ID, @RequestBody Trader traderDetails) {
+        Trader trader = traderService.getById(ID);
+        trader.setID(traderDetails.getID());
+        trader.setEmail(traderDetails.getEmail());
+        trader.setFirstName(traderDetails.getFirstName());
+        trader.setPrefix(traderDetails.getPrefix());
+        trader.setName(traderDetails.getName());
+        trader.setBSN(traderDetails.getBSN());
+        trader.setDateOfBirth(traderDetails.getDateOfBirth());
+        trader.setStreet(traderDetails.getStreet());
+        trader.setHouseNumber(traderDetails.getHouseNumber());
+        trader.setZipCode(traderDetails.getZipCode());
+        trader.setCity(traderDetails.getCity());
+        trader.setActive(traderDetails.isActive());
+        traderService.upate(trader);
+        return ResponseEntity.ok(trader);
+    }
+
+
+
     @PostMapping(value = "/delete")
     @ResponseBody
     List<Trader> deleteTrader(@RequestBody int ID) {
         traderService.delete(ID);
         return traderService.getAll();
     }
+
+//    @DeleteMapping("/employees/{id}")
+//    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
+//            throws ResourceNotFoundException {
+//        Employee employee = employeeRepository.findById(employeeId)
+//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
+//
+//        employeeRepository.delete(employee);
+//        Map<String, Boolean> response = new HashMap<>();
+//        response.put("deleted", Boolean.TRUE);
+//        return response;
+
+
+
 
     //Full path: {localhost:8080}/traders/find?traderName={starr}
     //(In Postman: vul in tot en met find, en voeg in de Params toe traderName en de (achter)naam die je wil zoeken

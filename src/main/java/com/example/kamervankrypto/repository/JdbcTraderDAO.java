@@ -8,20 +8,20 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
-public class JdbcTraderDAO implements TraderDAO {
+public class JdbcTraderDAO implements TraderDAO, Serializable {
 
     private JdbcTemplate jdbcTemplate;
     public JdbcTraderDAO (JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    //TODO
     private PreparedStatement insertTraderStatement(Trader trader, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement("insert into KamerVanKrypto.Trader (idTrader, Password," +
                 "FirstName, Prefix, Name, BSN, Birthdate, Adress, Number, PostalCode, City, Email, Active) values " +
@@ -76,6 +76,9 @@ public class JdbcTraderDAO implements TraderDAO {
         List<Trader> resultList = jdbcTemplate.query(sql, new TraderRowMapper(), name);
         if (resultList.size() == 0) {
             return null;
+            //probleem is dat deze methode een Trader teruggeeft.
+//        } else if (resultList.size() > 1) {
+//            return resultList.toString();
         } else {
             return resultList.get(0);
         }
@@ -85,7 +88,7 @@ public class JdbcTraderDAO implements TraderDAO {
     public void update(Trader trader) {
         String sql = "UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
                 "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ?";
-        jdbcTemplate.update(sql, new TraderRowMapper());
+        jdbcTemplate.update(sql);
     }
 
     @Override
@@ -94,7 +97,7 @@ public class JdbcTraderDAO implements TraderDAO {
         jdbcTemplate.update(sql, new TraderRowMapper());
     }
 
-    private class TraderRowMapper implements RowMapper<Trader> {
+    private class TraderRowMapper implements RowMapper<Trader>, Serializable {
         @Override
         public Trader mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
                 return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
