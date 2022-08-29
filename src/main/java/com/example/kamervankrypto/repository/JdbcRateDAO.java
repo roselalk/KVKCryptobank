@@ -24,16 +24,18 @@ public class JdbcRateDAO implements RateDAO {
     @Override
     public List<Rate> getAllByTicker(String ticker) {
         String sql = "SELECT * FROM Rate WHERE Ticker = ?;";
-        List<Rate> resultList = jdbcTemplate.query(sql, new RateRowMapper(), ticker);
-    return resultList;
+        return jdbcTemplate.query(sql, new RateRowMapper(), ticker);
     }
 
     @Override
     public Rate getCurrentByTicker(String ticker) {
         String sql = "SELECT * FROM Rate WHERE Ticker = ? ORDER BY RateDateTime DESC LIMIT 1;";
         List<Rate> resultList = jdbcTemplate.query(sql, new RateRowMapper(), ticker);
-        return resultList.get(0);
-
+        if (!resultList.isEmpty()) {
+            return resultList.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -49,7 +51,7 @@ public class JdbcRateDAO implements RateDAO {
                 "INSERT INTO Rate (RateDateTime, Ticker, Rate) VALUES (?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, rate.getDate());
-        ps.setString(2, rate.getTicker()); //waar komt deze vandaan? //TODO
+        ps.setString(2, rate.getPair().getTicker()); //waar komt deze vandaan? //TODO
         ps.setDouble(3, rate.getValue());
         return ps;
     }

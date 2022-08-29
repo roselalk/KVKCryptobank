@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +38,18 @@ public class JdbcAssetDAO implements AssetDAO {
         String sql = "SELECT * FROM Asset WHERE Name = ?;";
         List<Asset> resultList = jdbcTemplate.query(sql, new AssetRowMapper(), name);
         return resultList.get(0);
+    }
+
+    @Override
+    public void store(Asset asset) {
+        jdbcTemplate.update(connection -> insertAssetStatement(asset, connection));
+    }
+
+    private PreparedStatement insertAssetStatement(Asset asset, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO Asset (Ticker, Name) VALUES (?, ?)");
+        ps.setString(1, asset.getTicker());
+        ps.setString(2, asset.getName());
+        return ps;
     }
 
     private class AssetRowMapper implements RowMapper<Asset> {
