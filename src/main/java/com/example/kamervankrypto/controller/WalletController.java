@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/wallets")
+@RequestMapping(value = "/portfolio")
 public class WalletController {
     private WalletService walletService;
 
@@ -22,14 +22,14 @@ public class WalletController {
     //wallets represents all the wallets FOR THE LOGGED-IN USER, not all the wallets from the table wallet in sql:
     @GetMapping
     @ResponseBody
-    List<Wallet> getWallets() {return walletService.getAllByTraderId(walletService.loggedInTrader.getID());}
+    List<Wallet> getWallets() {return walletService.getAllByTrader();}
 
-    //needs the asset ticker to find a specific wallet for the logged-in user:
+    //needs the asset ticker to find a specific wallet for the logged-in user: localhost:8080/portfolio/btc
     @GetMapping(value = "/{asset}")
     @ResponseBody
     Wallet getWalletByAssetTicker(@PathVariable("asset") String ticker) {
         Optional<Wallet> wallet =
-                walletService.getByTraderIdAndAssetTicker(walletService.loggedInTrader.getID(), ticker);
+                walletService.getByTraderIdAndAssetTicker(ticker);
         if (wallet.isPresent()) {
             return wallet.get();
         } else {
@@ -37,16 +37,16 @@ public class WalletController {
         }
     }
 
-    @PutMapping
+    @PostMapping
     @ResponseBody  List<Wallet> createWallet(@RequestBody Wallet wallet) {
         walletService.save(wallet);
-        return walletService.getAllByTraderId(walletService.loggedInTrader.getID());
+        return walletService.getAllByTrader();
     }
 
     @PostMapping
     @ResponseBody  List<Wallet> updateWallet(@RequestBody Wallet wallet) {
         walletService.update(wallet);
-        return walletService.getAllByTraderId(walletService.loggedInTrader.getID());
+        return walletService.getAllByTrader();
     }
 
 

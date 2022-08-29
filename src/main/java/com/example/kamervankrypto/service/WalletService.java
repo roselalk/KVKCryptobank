@@ -18,15 +18,17 @@ public class WalletService {
     public WalletService(WalletDAO walletDAO, WalletRepository walletRepository) {
         this.walletDAO = walletDAO;
         this.walletRepository = walletRepository;
-        this.loggedInTrader = walletRepository.loggedInTrader;
+        this.loggedInTrader = new Trader(1, "one@kvkrypto.nl", "1234",
+                "Bob", "de", "Bank", 0, null, "streetName" ,
+                "1", "1234AB", "Hilversum" , true);
     }
 
-    public List<Wallet> getAllByTraderId(int id) {
-        return walletRepository.findAllByTraderIdWithAssets(id);
+    public List<Wallet> getAllByTrader() {
+        return walletRepository.findAllByTraderWithAssets(loggedInTrader);
     }
 
-    public Optional<Wallet> getByTraderIdAndAssetTicker(int id, String ticker) {
-        return walletRepository.findByTraderIdAndTickerWithAsset(id, ticker);
+    public Optional<Wallet> getByTraderIdAndAssetTicker(String ticker) {
+        return walletRepository.findByTraderAndTickerWithAsset(loggedInTrader, ticker);
     }
 
     public void save(Wallet wallet) {

@@ -11,21 +11,15 @@ import java.util.Optional;
 public class WalletRepository {
     private WalletDAO walletDAO;
     private AssetDAO assetDAO;
-
-    //TODO: PLACE THIS SOMEWHERE ELSE WHERE WE CAN ALL USE IT AND EXTRACT IT FROM THE TOKEN
-    public Trader loggedInTrader = new Trader(1, "one@kvkrypto.nl", "1234",
-            "Bob", "de", "Bank", 0, null, "streetName" ,
-            "1", "1234AB", "Hilversum" , true);
-
     public WalletRepository(WalletDAO walletDAO, AssetDAO assetDAO) {
         this.walletDAO = walletDAO;
         this.assetDAO = assetDAO;
     }
 
-    public List<Wallet> findAllByTraderIdWithAssets(int id) {
-        List<Wallet> walletList = walletDAO.findAllByTraderId(id);
+    public List<Wallet> findAllByTraderWithAssets(Trader trader) {
+        List<Wallet> walletList = walletDAO.findAllByTraderId(trader.getID());
         for (Wallet w : walletList) {
-            w.setTrader(loggedInTrader);
+            w.setTrader(trader);
             w.setAsset(assetDAO.getByTicker(w.getAsset().getTicker()));
         }
         //todo: when we get the wallets for the user who logged in, we set it on the portfolio object (do the same with bank account)
@@ -33,10 +27,10 @@ public class WalletRepository {
         return walletList;
     }
 
-    public Optional<Wallet> findByTraderIdAndTickerWithAsset(int id, String ticker) {
-        Optional<Wallet> wallet = walletDAO.findByTraderIdAndAsset(id, ticker);
+    public Optional<Wallet> findByTraderAndTickerWithAsset(Trader trader, String ticker) {
+        Optional<Wallet> wallet = walletDAO.findByTraderIdAndAsset(trader.getID(), ticker);
         if (wallet.isPresent()) {
-            wallet.get().setTrader(loggedInTrader);
+            wallet.get().setTrader(trader);
             wallet.get().setAsset(assetDAO.getByTicker(ticker));
         }
         return wallet;

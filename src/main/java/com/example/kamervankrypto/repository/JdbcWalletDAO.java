@@ -36,20 +36,20 @@ public class JdbcWalletDAO implements WalletDAO {
     @Override
     public void save(Wallet wallet) {
         String sql = "insert into Wallet (idTrader, Ticker, Amount) values (?, ?, ?)";
-        return jdbcTemplate.update(sql, wallet.getTrader().getID(), wallet.getAsset().getTicker(), wallet.getAmount());
+        jdbcTemplate.update(sql, wallet.getTrader().getID(), wallet.getAsset().getTicker(), wallet.getAmount());
     }
 
     @Override
     public void update(Wallet wallet) {
         String sql = "update Wallet set Amount = ? where idTrader = ? AND Ticker = ?;";
-        return jdbcTemplate.update(sql, wallet.getAmount(), wallet.getTrader().getID(), wallet.getAsset().getTicker());
+        jdbcTemplate.update(sql, wallet.getAmount(), wallet.getTrader().getID(), wallet.getAsset().getTicker());
     }
 
     //todo: we might not need this method, but it is here for CRUD functionality
     @Override
     public void delete(Wallet wallet) {
-        String sql = "delete from wallet where idTrader = ? AND Abbreviation = '?;";
-        return jdbcTemplate.update(sql, wallet.getTrader().getID(), wallet.getAsset().getTicker());
+        String sql = "delete from wallet where idTrader = ? AND Abbreviation = ?;";
+        jdbcTemplate.update(sql, wallet.getTrader().getID(), wallet.getAsset().getTicker());
     }
     private class WalletRowMapper implements RowMapper<Wallet> {
         @Override
