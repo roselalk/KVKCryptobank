@@ -8,10 +8,7 @@ public interface WalletDAO {
     List<Wallet> findAllByTraderId(int traderId);
     Optional<Wallet> findByTraderIdAndAsset(int id, String ticker);
     void save(Wallet wallet);
-    void update(Wallet wallet);
-    void delete(Wallet wallet);
-    /*
-    todo: do we need a method to bring all wallets with the same asset from all traders??
-    possible solution: we use findByTraderIdAndAsset in the TraderService?
-     */
+    void update(int idWallet, double amount);
+    void delete(int idWallet);
+
 }
