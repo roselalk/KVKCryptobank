@@ -10,15 +10,14 @@ public class BankAccount {
 
     private Trader trader;
     private double saldo;
-//    private String saldoDateTime;
-    private LocalDateTime saldoDateTime;
+    private String saldoDateTime;
     private String iban;
     private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
 
     // CONSTRUCTORS
 
-    public BankAccount(Trader trader, double saldo, LocalDateTime saldoDateTime, String iban) {
+    public BankAccount(Trader trader, double saldo, String saldoDateTime, String iban) {
         this.trader = trader;
         this.saldo = saldo;
         this.saldoDateTime = saldoDateTime;
@@ -28,11 +27,11 @@ public class BankAccount {
     public BankAccount(Trader trader, double saldo) {
         this.trader = trader;
         this.saldo = saldo;
-        this.saldoDateTime = getCurrentDateTime();
+        this.saldoDateTime = getCurrentDateTime().toString();
         this.iban = createNewIBAN();
     }
 
-    public BankAccount(double saldo, LocalDateTime saldoDateTime, String iban) {
+    public BankAccount(double saldo, String saldoDateTime, String iban) {
         this.saldo = saldo;
         this.saldoDateTime = saldoDateTime;
         this.iban = iban;
@@ -43,7 +42,7 @@ public class BankAccount {
 
     public static LocalDateTime getCurrentDateTime() {
         LocalDateTime dateTimeNow = LocalDateTime.now();
-        System.out.println(dateTimeNow);
+        //System.out.println(dateTimeNow);
 
         // EEN KORTE TEST OM MET LOCALDATETIME TE REKENEN. DEZE METHODE WERKT
 //        LocalDateTime BirthDate = LocalDateTime.of(1984, 4, 25, 10, 10, 25);
@@ -120,11 +119,11 @@ public class BankAccount {
         this.saldo = saldo;
     }
 
-    public LocalDateTime getSaldoDateTime() {
+    public String getSaldoDateTime() {
         return saldoDateTime;
     }
 
-    public void setSaldoDateTime(LocalDateTime saldoDateTime) {
+    public void setSaldoDateTime(String saldoDateTime) {
         this.saldoDateTime = saldoDateTime;
     }
 

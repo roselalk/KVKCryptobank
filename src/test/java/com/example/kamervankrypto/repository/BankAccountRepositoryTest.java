@@ -34,8 +34,10 @@ public class BankAccountRepositoryTest {
         System.out.println(dateNow);
         DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        mockTrader = new Trader(1, "a@b.com", "Password", "Piet1", "de", "Weetikniet1", 123456789, birthDate, "Straat", "5a", "1234ab", "Stadje", true);
-        BankAccount mockBankAccount = new BankAccount(12345.25, LocalDateTime.parse(dateNow.format(DATEFORMAT), DATEFORMAT), "NL23KVKB356985759");
+        //TODO: dit weer fixen
+        //mockTrader = new Trader(1, "a@b.com", "Password", "Piet1", "de", "Weetikniet1", 123456789, sBirthDate, "Straat", "5a", "1234ab", "Stadje", true);
+        //BankAccount mockBankAccount = new BankAccount(12345.25, LocalDateTime.parse(dateNow.format(DATEFORMAT), DATEFORMAT), "NL23KVKB356985759");
+        BankAccount mockBankAccount = new BankAccount(12345.25, dateNow.format(DATEFORMAT).toString(), "NL23KVKB356985759");
 
         Mockito.when(mockBankAccountDAO.getBankAccount(1)).thenReturn(mockBankAccount);
         bankAccountRepositoryTested = new BankAccountRepository(mockBankAccountDAO);
