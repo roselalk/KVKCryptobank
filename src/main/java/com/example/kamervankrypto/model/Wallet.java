@@ -10,6 +10,14 @@ public class Wallet {
     private double amount;
 
     //CONSTRUCTOR:
+
+    //constructor to save new wallets that still don't have an idWallet:
+    public Wallet(Trader trader, Asset asset, double amount) {
+        this.trader = trader;
+        this.asset = asset;
+        this.amount = amount;
+    }
+
     //this constructor we need for the WalletDAO
     public Wallet (int idWallet, double amount) {
         this.idWallet = idWallet;
@@ -23,6 +31,8 @@ public class Wallet {
         this.trader = trader;
         this.asset = asset;
     }
+
+
 
     //GETTERS AND SETTERS:
     public int getIdWallet() {
