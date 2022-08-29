@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,7 +32,7 @@ public class TraderController {
     //Full path: {localhost:8080}/traders/user/{id}
     @GetMapping(value = "/user/{id}")
     @ResponseBody
-    Trader getTraderById(@PathVariable("id") String id) {
+    Trader getTraderById(@PathVariable("id") int id) {
         Optional<Trader> trader = Optional.ofNullable(traderService.getById(id));
         if (trader.isPresent()) {
             return trader.get();
@@ -40,68 +41,34 @@ public class TraderController {
         }
     }
 
-    @PostMapping
+    //Full path: {localhost:8080}/traders/find?traderName={starr}
+    //(In Postman: vul in tot en met find, en voeg in de Params toe traderName en de (achter)naam die je wil zoeken
+    @GetMapping (value = "/user/find")
+    @ResponseBody
+    List<Trader> getTraderByName(@RequestParam("traderName") String name) {
+        return traderService.getByName(name);
+    }
+
+    @PutMapping
     @ResponseBody
     List<Trader> createTrader(@RequestBody Trader trader) {
         traderService.save(trader);
         return traderService.getAll();
     }
 
-    @PostMapping(value = "/update")
-    @ResponseBody
-    List<Trader> updateTrader(@RequestBody Trader trader) {
-        traderService.upate(trader);
-        return traderService.getAll();
-    }
-
-    @PutMapping ("/update/{id}")
-    public ResponseEntity<Trader> updateTrader(@PathVariable("id") String ID, @RequestBody Trader traderDetails) {
-        Trader trader = traderService.getById(ID);
-        trader.setID(traderDetails.getID());
-        trader.setEmail(traderDetails.getEmail());
-        trader.setFirstName(traderDetails.getFirstName());
-        trader.setPrefix(traderDetails.getPrefix());
-        trader.setName(traderDetails.getName());
-        trader.setBSN(traderDetails.getBSN());
-        trader.setDateOfBirth(traderDetails.getDateOfBirth());
-        trader.setStreet(traderDetails.getStreet());
-        trader.setHouseNumber(traderDetails.getHouseNumber());
-        trader.setZipCode(traderDetails.getZipCode());
-        trader.setCity(traderDetails.getCity());
-        trader.setActive(traderDetails.isActive());
+    //Zet alle gegevens van de Trader die je wil wijzigen in de body
+    @PostMapping ("/user/update")
+    public ResponseEntity<Trader> updateTrader(@RequestBody Trader trader) {
         traderService.upate(trader);
         return ResponseEntity.ok(trader);
     }
 
-
-
-    @PostMapping(value = "/delete")
-    @ResponseBody
-    List<Trader> deleteTrader(@RequestBody int ID) {
+    //Zet het ID van de Trader die je wil verwijderen in de path (dus na /delete). Hoeft niks in de body
+    @DeleteMapping ("/user/delete/{id}")
+    public ResponseEntity<Trader> deleteTrader(@PathVariable(value = "id") int ID) {
+        Trader trader = traderService.getById(ID);
         traderService.delete(ID);
-        return traderService.getAll();
-    }
-
-//    @DeleteMapping("/employees/{id}")
-//    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
-//            throws ResourceNotFoundException {
-//        Employee employee = employeeRepository.findById(employeeId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :: " + employeeId));
-//
-//        employeeRepository.delete(employee);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("deleted", Boolean.TRUE);
-//        return response;
-
-
-
-
-    //Full path: {localhost:8080}/traders/find?traderName={starr}
-    //(In Postman: vul in tot en met find, en voeg in de Params toe traderName en de (achter)naam die je wil zoeken
-    @GetMapping (value = "/find")
-    @ResponseBody
-    Trader getTraderByName(@RequestParam("traderName") String name) {
-        return traderService.getByName(name);
+        return ResponseEntity.ok(trader);
     }
 
 

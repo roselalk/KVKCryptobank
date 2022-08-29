@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.yaml.snakeyaml.events.Event;
 
 import java.io.Serializable;
 import java.sql.*;
@@ -15,10 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
-public class JdbcTraderDAO implements TraderDAO, Serializable {
+public class JdbcTraderDAO implements TraderDAO {
 
     private JdbcTemplate jdbcTemplate;
-    public JdbcTraderDAO (JdbcTemplate jdbcTemplate) {
+
+    public JdbcTraderDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -58,7 +60,7 @@ public class JdbcTraderDAO implements TraderDAO, Serializable {
 
 
     @Override
-    public Trader findById(String id) {
+    public Trader findById(int id) {
         String sql = "SELECT * FROM Trader WHERE idTrader = ?";
         List<Trader> resultList = jdbcTemplate.query(sql, new TraderRowMapper(), id);
         if (resultList.size() == 0) {
@@ -70,41 +72,47 @@ public class JdbcTraderDAO implements TraderDAO, Serializable {
 
 
     @Override
-    public Trader getTraderByName(String name) {
-        //Wat als er 2 mensen met dezelfde naam zijn? Misschien beter zoeken op voor+achter?
+    public List<Trader> getTraderByName(String name) {
         String sql = "SELECT * FROM Trader WHERE Name = ?";
-        List<Trader> resultList = jdbcTemplate.query(sql, new TraderRowMapper(), name);
-        if (resultList.size() == 0) {
-            return null;
-            //probleem is dat deze methode een Trader teruggeeft.
-//        } else if (resultList.size() > 1) {
-//            return resultList.toString();
-        } else {
-            return resultList.get(0);
-        }
+//        List<Trader> resultList = jdbcTemplate.query(sql, new TraderRowMapper(), name);
+//        for (Trader trader : resultList) {
+//            return trader;
+//        }
+//        if (resultList.size() == 0) {
+//            return null;
+//        } else {
+//            for (Trader trader : resultList) {
+//                return trader;
+//            }
+//        }
+        return jdbcTemplate.query(sql, new TraderRowMapper(), name);
     }
 
     @Override
     public void update(Trader trader) {
-        String sql = "UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
-                "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ?";
-        jdbcTemplate.update(sql);
+//        String sql = "UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
+//                "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ?";
+        jdbcTemplate.update("UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
+                        "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ? WHERE idTrader = ?", trader.getPassword(),
+                trader.getFirstName(), trader.getPrefix(), trader.getName(), trader.getBSN(), trader.getDateOfBirth(),
+                trader.getStreet(), trader.getHouseNumber(), trader.getZipCode(), trader.getCity(), trader.getEmail(),
+                trader.isActive(), trader.getID());
     }
 
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM Trader WHERE idTrader = ?";
-        jdbcTemplate.update(sql, new TraderRowMapper());
+        jdbcTemplate.update(sql, id);
     }
 
-    private class TraderRowMapper implements RowMapper<Trader>, Serializable {
+    private class TraderRowMapper implements RowMapper<Trader> {
         @Override
         public Trader mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-                return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
-                        resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
-                        resultSet.getInt("BSN"), resultSet.getString("Birthdate"), resultSet.getString("Adress"),
-                        resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
-                        resultSet.getBoolean("Active"));
+            return new Trader(resultSet.getInt("idTrader"), resultSet.getString("Email"), resultSet.getString("Password"),
+                    resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
+                    resultSet.getInt("BSN"), resultSet.getString("Birthdate"), resultSet.getString("Adress"),
+                    resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
+                    resultSet.getBoolean("Active"));
         }
     }
 
