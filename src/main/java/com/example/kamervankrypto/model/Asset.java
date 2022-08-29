@@ -7,7 +7,7 @@ public class Asset {
 
     private String ticker;
     private String name;
-    private Rate rate;
+    private Rate value;
     private List<Rate> historicalRates;
 
     public Asset(String ticker, String name) {
@@ -31,12 +31,12 @@ public class Asset {
         this.name = name;
     }
 
-    public Rate getRate() {
-        return rate;
+    public Rate getValue() {
+        return value;
     }
 
-    public void setRate(Rate rate) {
-        this.rate = rate;
+    public void setValue(Rate value) {
+        this.value = value;
     }
 
     public List<Rate> getHistoricalRates() {
@@ -64,7 +64,7 @@ public class Asset {
         return "Asset{" +
                 "ticker='" + ticker + '\'' +
                 ", name='" + name + '\'' +
-                ", rate=" + rate +
+                ", rate=" + value +
                 '}';
     }
 }

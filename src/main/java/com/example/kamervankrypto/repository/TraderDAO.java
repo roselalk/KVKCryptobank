@@ -8,13 +8,13 @@ public interface TraderDAO {
 
     List<Trader> findAll();
 
-    Trader findById(String id);
+    Trader findById(int id);
 
     void update(Trader trader);
 
     void save(Trader trader);
 
-    Trader getTraderByName(String name);
+    List<Trader> getTraderByName(String name);
 
     void delete(int id);
 }

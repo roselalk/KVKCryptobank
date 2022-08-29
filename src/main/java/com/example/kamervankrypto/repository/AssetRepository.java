@@ -23,20 +23,46 @@ public class AssetRepository {
     public List<Asset> getAllWithCurrentRate() {
         List<Asset> assetList = assetDAO.getAll();
         for (Asset a : assetList) {
-            a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
+            a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
         }
         return assetList;
     }
 
     public Asset getByTickerWithCurrentRate(String ticker) {
         Asset a = assetDAO.getByTicker(ticker);
-        a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
+        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
         return a;
     }
 
     public Asset getByNameWithCurrentRate(String name) {
         Asset a = assetDAO.getByName(name);
-        a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
+        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
         return a;
+    }
+
+    public Asset getByTickerWithHistoricalRates(String ticker) {
+        Asset a = assetDAO.getByTicker(ticker);
+        a.setHistoricalRates(rateDAO.getAllByTicker(ticker));
+        return a;
+    }
+
+    public Asset getByTickerWithAllRates(String ticker) {
+        Asset a = assetDAO.getByTicker(ticker);
+        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
+        a.setHistoricalRates(rateDAO.getAllByTicker(a.getTicker()));
+        return a;
+    }
+
+    public List<Asset> getAllWithAllRates() {
+        List<Asset> assetList = assetDAO.getAll();
+        for (Asset a : assetList) {
+            a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
+            a.setHistoricalRates(rateDAO.getAllByTicker(a.getTicker()));
+        }
+        return assetList;
+    }
+
+    public void store(Asset asset){
+        assetDAO.store(asset);
     }
 }

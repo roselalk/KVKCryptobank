@@ -11,6 +11,5 @@ public interface RateDAO {
 
     Rate getCurrentByTicker(String ticker);
 
-    void create(Rate rate);
-
+    void store(Rate rate);
 }

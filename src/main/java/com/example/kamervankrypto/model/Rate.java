@@ -1,32 +1,35 @@
 package com.example.kamervankrypto.model;
 
+import java.util.Objects;
+
 public class Rate {
 
-    int idRate;
-    double valuedAt;
-    String date;
-    String ticker;
+    private int rateId;
+    private double value;
+    private String date;
+    private Asset pair;
 
-    public Rate(int idRate, double value, String date) {
-        this.idRate = idRate;
-        this.valuedAt = value;
+
+    public Rate(int rateId, double value, String date) {
+        this.rateId = rateId;
+        this.value = value;
         this.date = date;
     }
 
-    public int getIdRate() {
-        return idRate;
+    public int getRateId() {
+        return rateId;
     }
 
-    public void setIdRate(int idRate) {
-        this.idRate = idRate;
+    public void setRateId(int rateId) {
+        this.rateId = rateId;
     }
 
-    public double getValuedAt() {
-        return valuedAt;
+    public double getValue() {
+        return value;
     }
 
-    public void setValuedAt(double valuedAt) {
-        this.valuedAt = valuedAt;
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public String getDate() {
@@ -37,14 +40,31 @@ public class Rate {
         this.date = date;
     }
 
-    public String getTicker() {
-        return ticker;
+    public Asset getPair() {
+        return pair;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setPair(Asset pair) {
+        this.pair = pair;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rate rate)) return false;
+        return getRateId() == rate.getRateId();
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getRateId());
+    }
 
+    @Override
+    public String toString() {
+        return "Rate{" +
+                "value=" + value +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

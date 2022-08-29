@@ -20,11 +20,11 @@ public class TraderService {
         return traderDAO.findAll();
     }
 
-    public Trader getById(String id) {
+    public Trader getById(int id) {
         return traderDAO.findById(id);
     }
 
-    public Trader getByName(String name) {
+    public List<Trader> getByName(String name) {
         return traderDAO.getTraderByName(name);
     }
 

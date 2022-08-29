@@ -15,7 +15,7 @@ public class AssetService {
         this.assetRepository = assetRepository;
     }
 
-    public List<Asset> getAll(){
+    public List<Asset> getAll() {
         return assetRepository.getAll();
     }
 
@@ -31,4 +31,13 @@ public class AssetService {
         return assetRepository.getByNameWithCurrentRate(name);
     }
 
+    public Asset getByTickerWithHistoricalRates(String ticker) {
+        return assetRepository.getByTickerWithHistoricalRates(ticker);
+    }
+
+    public List<Asset> getAllWithAllRates() {
+        return assetRepository.getAllWithAllRates();
+    }
+
+    public void store(Asset asset){assetRepository.store(asset);}
 }
