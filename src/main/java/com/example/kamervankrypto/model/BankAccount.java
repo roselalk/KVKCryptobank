@@ -1,35 +1,63 @@
 package com.example.kamervankrypto.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
-
 public class BankAccount {
 
-    private int idTrader;
+    private Trader trader;
     private double saldo;
-    private String saldoDateTime;
+//    private String saldoDateTime;
+    private LocalDateTime saldoDateTime;
     private String iban;
+    private static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+
 
     // CONSTRUCTORS
 
-    public BankAccount(int idTrader, double saldo, String saldoDateTime, String iban) {
-        this.idTrader = idTrader;
+    public BankAccount(Trader trader, double saldo, LocalDateTime saldoDateTime, String iban) {
+        this.trader = trader;
         this.saldo = saldo;
         this.saldoDateTime = saldoDateTime;
         this.iban = iban;
     }
 
-    public BankAccount(int idTrader, double saldo) {
-        this.idTrader = idTrader;
+    public BankAccount(Trader trader, double saldo) {
+        this.trader = trader;
         this.saldo = saldo;
-        this.saldoDateTime = DateTime.toString();
+        this.saldoDateTime = getCurrentDateTime();
         this.iban = createNewIBAN();
     }
 
+    public BankAccount(double saldo, LocalDateTime saldoDateTime, String iban) {
+        this.saldo = saldo;
+        this.saldoDateTime = saldoDateTime;
+        this.iban = iban;
+        this.trader = null;
+    }
 
     // METHODS
+
+    public static LocalDateTime getCurrentDateTime() {
+        LocalDateTime dateTimeNow = LocalDateTime.now();
+        System.out.println(dateTimeNow);
+
+        // EEN KORTE TEST OM MET LOCALDATETIME TE REKENEN. DEZE METHODE WERKT
+//        LocalDateTime BirthDate = LocalDateTime.of(1984, 4, 25, 10, 10, 25);
+//        String sBirthDate = "1984-08-26T13:24:33.285401";
+//
+//        if (dateTimeNow.isAfter(BirthDate) ){
+//            System.out.println("Jup, erna");
+//        } else {
+//            System.out.println("Jup, ervoor");
+//        }
+
+        return LocalDateTime.parse(dateTimeNow.format(DATEFORMAT), DATEFORMAT);
+    }
+
 
     private String createNewIBAN(){
         String Countrycode  = "NL";
@@ -53,7 +81,7 @@ public class BankAccount {
     @Override
     public String toString() {
         return "BankAccount{" +
-                "idTrader=" + idTrader +
+                "trader=" + trader +
                 ", saldo=" + saldo +
                 ", saldoDateTime='" + saldoDateTime + '\'' +
                 ", iban='" + iban + '\'' +
@@ -65,23 +93,23 @@ public class BankAccount {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BankAccount that = (BankAccount) o;
-        return idTrader == that.idTrader && Double.compare(that.saldo, saldo) == 0 && saldoDateTime.equals(that.saldoDateTime) && iban.equals(that.iban);
+        return Double.compare(that.saldo, saldo) == 0 && trader.equals(that.trader) && saldoDateTime.equals(that.saldoDateTime) && iban.equals(that.iban);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTrader, saldo, saldoDateTime, iban);
+        return Objects.hash(trader, saldo, saldoDateTime, iban);
     }
 
+// GETTERS AND SETTERS
 
-    // GETTERS AND SETTERS
 
-    public int getIdTrader() {
-        return idTrader;
+    public Trader getTrader() {
+        return trader;
     }
 
-    public void setIdTrader(int idTrader) {
-        this.idTrader = idTrader;
+    public void setTrader(Trader trader) {
+        this.trader = trader;
     }
 
     public double getSaldo() {
@@ -92,11 +120,11 @@ public class BankAccount {
         this.saldo = saldo;
     }
 
-    public String getSaldoDateTime() {
+    public LocalDateTime getSaldoDateTime() {
         return saldoDateTime;
     }
 
-    public void setSaldoDateTime(String saldoDateTime) {
+    public void setSaldoDateTime(LocalDateTime saldoDateTime) {
         this.saldoDateTime = saldoDateTime;
     }
 
@@ -106,5 +134,9 @@ public class BankAccount {
 
     public void setIban(String iban) {
         this.iban = iban;
+    }
+
+    public static DateTimeFormatter getDATEFORMAT() {
+        return DATEFORMAT;
     }
 }

@@ -27,7 +27,8 @@ public class TraderController {
         return traderService.getAll();
     }
 
-    @GetMapping(value = "/{id}")
+    //Full path: {localhost:8080}/traders/user/{id}
+    @GetMapping(value = "/user/{id}")
     @ResponseBody
     Trader getTraderById(@PathVariable("id") String id) {
         Optional<Trader> trader = Optional.ofNullable(traderService.getById(id));
@@ -38,7 +39,6 @@ public class TraderController {
         }
     }
 
-
     @PostMapping
     @ResponseBody
     List<Trader> createTrader(@RequestBody Trader trader) {
@@ -46,6 +46,15 @@ public class TraderController {
         return traderService.getAll();
     }
 
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    List<Trader> deleteTrader(@RequestBody int ID) {
+        traderService.delete(ID);
+        return traderService.getAll();
+    }
+
+    //Full path: {localhost:8080}/traders/find?traderName={starr}
+    //(In Postman: vul in tot en met find, en voeg in de Params toe traderName en de (achter)naam die je wil zoeken
     @GetMapping (value = "/find")
     @ResponseBody
     Trader getTraderByName(@RequestParam("traderName") String name) {

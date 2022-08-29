@@ -16,5 +16,5 @@ public interface TraderDAO {
 
     Trader getTraderByName(String name);
 
-
+    void delete(int id);
 }
