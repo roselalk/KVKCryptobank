@@ -79,6 +79,14 @@ public class Transaction {
         this.asset = asset;
     }
 
+    public String getTransactionDateTime() {
+        return transactionDateTime;
+    }
+
+    public void setTransactionDateTime(String transactionDateTime) {
+        this.transactionDateTime = transactionDateTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

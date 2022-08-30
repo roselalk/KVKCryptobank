@@ -1,6 +1,5 @@
 package com.example.kamervankrypto.repository;
 
-import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -38,10 +37,9 @@ public class JdbcTransactionDAO implements TransactionDAO {
         }
     }
 
-
     @Override
     public void update(Transaction transaction) {
-        //  Discuss in team:
+        //  TODO Discuss in team:
         //  Updating  Transactions should not be possible: Updating a single transaction implies the recalculation
         //  of all following transaction, because updating a transaction may create a state where not enough saldo is
         //  available to complete any given following transaction.
@@ -49,7 +47,19 @@ public class JdbcTransactionDAO implements TransactionDAO {
     }
 
     @Override
+        //  TODO Toevoegen met auto-increment.
     public void save(Transaction transaction) {
+        String sql = "insert into Transaction " +
+                "(idTransaction, Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker )" +
+                " values (?,?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,
+                transaction.getIdTransaction(),
+                transaction.getAmount1(),
+                transaction.getTransactionFee(),
+                transaction.getTransactionDateTime(),
+                transaction.getBuyer().getID(),
+                transaction.getSeller().getID(),
+                transaction.getAsset().getTicker());
     }
 
     @Override

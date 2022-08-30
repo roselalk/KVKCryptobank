@@ -23,6 +23,10 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
+    public Transaction getById(int id) {
+        return transactionRepository.findById(id);
+    }
+
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
         return transactionRepository.getTransactionByBuyer(buyer);
     }
@@ -39,7 +43,4 @@ public class TransactionService {
         return transactionDAO.getTransactionBySellerId(sellerID);
     }
 
-    public Transaction getById(int idTransaction) {
-        return transactionDAO.findById(idTransaction);
-    }
 }

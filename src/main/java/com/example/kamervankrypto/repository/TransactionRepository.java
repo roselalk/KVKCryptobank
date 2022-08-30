@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public class TransactionRepository {
-    private final JdbcTemplate   jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
     private final TransactionDAO transactionDAO;
     private final TraderDAO traderDAO;
     private final AssetDAO assetDAO;
@@ -27,19 +27,30 @@ public class TransactionRepository {
     }
 
     public List<Transaction> findAll() {
-        String sql = "SELECT * FROM Transaction;";
+        String sql = "SELECT * FROM transaction;";
         return jdbcTemplate.query(sql, new TransactionRepository.TransactionRepositoryRowMapper());
     }
 
+    public Transaction findById(int idTransaction) {
+        String sql = "SELECT * FROM transaction WHERE idTransaction = ? ;";
+        List<Transaction> returnlist = jdbcTemplate.query(sql, new TransactionRepository.TransactionRepositoryRowMapper(), idTransaction);
+        if (returnlist.size() == 0) {
+            return null;
+        } else {
+            return returnlist.get(0);
+        }
+    }
+
     public List<Transaction> getTransactionBySeller(Trader seller) {
-        String sql = "SELECT * FROM Transaction WHERE idSeller = ?;";
+        String sql = "SELECT * FROM transaction WHERE idSeller = ?;";
         return jdbcTemplate.query(sql, new TransactionRepository.TransactionRepositoryRowMapper(), seller.getID());
     }
 
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
-        String sql = "SELECT * FROM Transaction WHERE idBuyer = ?;";
+        String sql = "SELECT * FROM transaction WHERE idBuyer = ?;";
         return jdbcTemplate.query(sql, new TransactionRepository.TransactionRepositoryRowMapper(), buyer.getID());
     }
+
     // Inserts Traders(buyer/seller) and Asset into Transaction based on DB-references.
     private class TransactionRepositoryRowMapper implements RowMapper<Transaction> {
         @Override
