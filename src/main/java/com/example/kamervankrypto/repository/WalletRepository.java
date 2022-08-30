@@ -20,10 +20,7 @@ public class WalletRepository {
         List<Wallet> walletList = walletDAO.findAllByTraderId(trader.getID());
         for (Wallet w : walletList) {
             w.setTrader(trader);
-            w.setAsset(assetDAO.getByTicker(w.getAsset().getTicker()));
         }
-        //todo: when we get the wallets for the user who logged in, we set it on the portfolio object (do the same with bank account)
-        // loggedInTrader.setPortfolio(walletList);
         return walletList;
     }
 
@@ -35,5 +32,12 @@ public class WalletRepository {
         }
         return wallet;
     }
+
+    public void save(Trader trader, String ticker, double amount) {
+        Wallet wallet = new Wallet(trader, assetDAO.getByTicker(ticker), amount);
+        walletDAO.save(wallet);
+    }
+
+
 
 }
