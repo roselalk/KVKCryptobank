@@ -8,7 +8,6 @@ public class Asset implements Comparable<Asset> {
     private String ticker;
     private String name;
     private Rate rate;
-
     private List<Rate> historicalRates;
 
     public Asset(String ticker, String name) {

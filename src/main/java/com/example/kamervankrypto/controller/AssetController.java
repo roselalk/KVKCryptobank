@@ -1,15 +1,15 @@
 package com.example.kamervankrypto.controller;
 
 
-import com.example.kamervankrypto.dto.AssetCurrentRateDTO;
-import com.example.kamervankrypto.dto.AssetHistoricalRatesDTO;
-import com.example.kamervankrypto.dto.HistoricalRateDTO;
+import com.example.kamervankrypto.dto.AssetDTO;
+import com.example.kamervankrypto.dto.RateDTO;
 import com.example.kamervankrypto.model.Asset;
 import com.example.kamervankrypto.service.AssetService;
 import com.example.kamervankrypto.service.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,34 +26,34 @@ public class AssetController {
     }
 
     @GetMapping
-    List<AssetCurrentRateDTO> getAllWithCurrenRates() {
-        return assetService.getAllWithCurrentRate().stream().map(AssetCurrentRateDTO::new).toList();
+    List<AssetDTO> getAllWithCurrenRates() {
+        return assetService.getAllWithCurrentRate().stream().map(AssetDTO::new).toList();
     }
 
     @GetMapping(value = "/{ticker}")
-    AssetCurrentRateDTO getByTickerWithCurrentRate(@PathVariable("ticker") String ticker) {
-        return new AssetCurrentRateDTO(assetService.getByTickerWithCurrentRate(ticker));
+    AssetDTO getByTickerWithCurrentRate(@PathVariable("ticker") String ticker) {
+        return new AssetDTO(assetService.getByTickerWithCurrentRate(ticker));
     }
 
-    //TODO
-    //retrieval of historical rates still needs work with DTO
     @GetMapping(value = "/historical")
-    List<Asset> getAllWithAll() {
-        return assetService.getAllWithAllRates();
+    List<RateDTO> getAllWithAll() {
+        List<Asset> assetList = assetService.getAllWithAllRates();
+        List<RateDTO> allRates = new ArrayList<>();
+        for (Asset a : assetList) {
+            a.getHistoricalRates().stream().map(RateDTO::new).forEach(allRates::add);
+        }
+        return allRates;
     }
 
-    //TODO
-    //retrieval of historical rates still needs work with DTO
     @GetMapping(value = "/historical/{ticker}")
-    AssetHistoricalRatesDTO getByTickerWithHistorical(@PathVariable("ticker") String ticker) {
-        AssetHistoricalRatesDTO assetHistoricalRatesDTO = new AssetHistoricalRatesDTO(assetService.getByTickerWithHistoricalRates(ticker));
-        assetHistoricalRatesDTO.setHistoricalRates(assetHistoricalRatesDTO.getHistoricalRates().stream().map(HistoricalRateDTO::new).toList());
-        return assetHistoricalRatesDTO;
+    List<RateDTO> getByTickerWithHistorical(@PathVariable("ticker") String ticker) {
+        Asset a = assetService.getByTickerWithHistoricalRates(ticker);
+        return a.getHistoricalRates().stream().map(RateDTO::new).toList();
     }
 
     @GetMapping(value = "/find")
-    AssetCurrentRateDTO getByNameWithCurrentRate(@RequestParam("Name") String name) {
-        return new AssetCurrentRateDTO(assetService.getByNameWithCurrentRate(name));
+    AssetDTO getByNameWithCurrentRate(@RequestParam("Name") String name) {
+        return new AssetDTO(assetService.getByNameWithCurrentRate(name));
     }
 
     @PostMapping(value = "/add")

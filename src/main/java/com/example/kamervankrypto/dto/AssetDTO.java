@@ -1,22 +1,22 @@
 package com.example.kamervankrypto.dto;
 
 import com.example.kamervankrypto.model.Asset;
-import com.example.kamervankrypto.model.Rate;
 
-import java.util.List;
-
-public class AssetHistoricalRatesDTO {
+public class AssetDTO {
 
     private String ticker;
     private String name;
-    private List<HistoricalRateDTO> historicalRates;
+    private String date;
+    private double rate;
 
-    public AssetHistoricalRatesDTO() {
+    public AssetDTO() {
     }
 
-    public AssetHistoricalRatesDTO(Asset a) {
+    public AssetDTO(Asset a) {
         ticker = a.getTicker();
         name = a.getName();
+        date = a.getRate().getDate();
+        rate = a.getRate().getValue();
     }
 
     public String getTicker() {
@@ -35,12 +35,19 @@ public class AssetHistoricalRatesDTO {
         this.name = name;
     }
 
-    public List<HistoricalRateDTO> getHistoricalRates() {
-        return historicalRates;
+    public String getDate() {
+        return date;
     }
 
-    public void setHistoricalRates(List<HistoricalRateDTO> historicalRates) {
-        this.historicalRates = historicalRates;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }
-

@@ -74,11 +74,11 @@ public class AssetRepository {
         if (!assetList.isEmpty()) {
             for (Asset a : assetList) {
                 List<Rate> rateList = rateDAO.getAllByTicker(a.getTicker());
+                a.setHistoricalRates(rateList);
                 for (Rate r : rateList) {
                     r.setAsset(a);
+                    a.setRate(r);
                 }
-                a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
-                a.setHistoricalRates(rateDAO.getAllByTicker(a.getTicker()));
             }
             return assetList;
         }
