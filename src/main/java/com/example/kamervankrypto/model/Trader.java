@@ -1,14 +1,12 @@
 package com.example.kamervankrypto.model;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Trader {
-
     private int ID;
     private String email;
     private String password;
+    private String salt;
     private String firstName;
     private String prefix;
     private String name;
@@ -22,7 +20,7 @@ public class Trader {
 
 
     public Trader(int ID, String email, String password, String firstName, String prefix, String name, int BSN,
-                  String dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive) {
+                  String dateOfBirth, String street, String houseNumber, String zipCode, String city, boolean isActive, String salt) {
         this.ID = ID;
         this.email = email;
         this.password = password;
@@ -142,6 +140,13 @@ public class Trader {
         isActive = active;
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     @Override
     public String toString() {return firstName + " " + prefix + " " + name + ", ID " + ID;}
@@ -154,10 +159,10 @@ public class Trader {
         Trader trader = (Trader) o;
         return ID == trader.ID && name.equals(trader.name);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ID, name);
-    }
+//Is dit nodig?
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(ID, name);
+//    }
 
 }

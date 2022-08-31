@@ -1,18 +1,13 @@
 package com.example.kamervankrypto.repository;
 
-import com.example.kamervankrypto.model.BankAccount;
 import com.example.kamervankrypto.model.Trader;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.yaml.snakeyaml.events.Event;
 
-import java.io.Serializable;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
@@ -26,8 +21,8 @@ public class JdbcTraderDAO implements TraderDAO {
 
     private PreparedStatement insertTraderStatement(Trader trader, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement("insert into KamerVanKrypto.Trader (idTrader, Password," +
-                "FirstName, Prefix, Name, BSN, Birthdate, Adress, Number, PostalCode, City, Email, Active) values " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+                "FirstName, Prefix, Name, BSN, Birthdate, Adress, Number, PostalCode, City, Email, Active, Salt) values " +
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)", Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, trader.getID());
         ps.setString(2, trader.getPassword());
         ps.setString(3, trader.getFirstName());
@@ -41,6 +36,7 @@ public class JdbcTraderDAO implements TraderDAO {
         ps.setString(11, trader.getCity());
         ps.setString(12, trader.getEmail());
         ps.setBoolean(13, trader.isActive());
+        ps.setString(14, trader.getSalt());
         return ps;
     }
 
@@ -74,24 +70,11 @@ public class JdbcTraderDAO implements TraderDAO {
     @Override
     public List<Trader> getTraderByName(String name) {
         String sql = "SELECT * FROM Trader WHERE Name = ?";
-//        List<Trader> resultList = jdbcTemplate.query(sql, new TraderRowMapper(), name);
-//        for (Trader trader : resultList) {
-//            return trader;
-//        }
-//        if (resultList.size() == 0) {
-//            return null;
-//        } else {
-//            for (Trader trader : resultList) {
-//                return trader;
-//            }
-//        }
         return jdbcTemplate.query(sql, new TraderRowMapper(), name);
     }
 
     @Override
     public void update(Trader trader) {
-//        String sql = "UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
-//                "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ?";
         jdbcTemplate.update("UPDATE Trader SET Password = ?, FirstName = ?, Prefix = ?, Name = ?, BSN = ?, Birthdate = ?, Adress = ?," +
                         "Number = ?, PostalCode = ?, City = ?, Email = ?, Active = ? WHERE idTrader = ?", trader.getPassword(),
                 trader.getFirstName(), trader.getPrefix(), trader.getName(), trader.getBSN(), trader.getDateOfBirth(),
@@ -112,7 +95,7 @@ public class JdbcTraderDAO implements TraderDAO {
                     resultSet.getString("FirstName"), resultSet.getString("Prefix"), resultSet.getString("Name"),
                     resultSet.getInt("BSN"), resultSet.getString("Birthdate"), resultSet.getString("Adress"),
                     resultSet.getString("Number"), resultSet.getString("PostalCode"), resultSet.getString("City"),
-                    resultSet.getBoolean("Active"));
+                    resultSet.getBoolean("Active"), resultSet.getString("Salt"));
         }
     }
 
