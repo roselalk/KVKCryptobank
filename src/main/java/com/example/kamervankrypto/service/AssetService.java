@@ -39,5 +39,7 @@ public class AssetService {
         return assetRepository.getAllWithAllRates();
     }
 
-    public void store(Asset asset){assetRepository.store(asset);}
+    public void store(Asset asset) {
+        assetRepository.store(asset);
+    }
 }

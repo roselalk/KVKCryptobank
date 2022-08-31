@@ -48,7 +48,7 @@ public class JdbcWalletDAO implements WalletDAO {
     //todo: we might not need this method, but it is here for CRUD functionality
     @Override
     public void delete(Wallet wallet) {
-        String sql = "delete from wallet where idTrader = ? AND Abbreviation = ?;";
+        String sql = "delete from wallet where idTrader = ? AND Ticker = ?;";
         jdbcTemplate.update(sql, wallet.getTrader().getID(), wallet.getAsset().getTicker());
     }
     private class WalletRowMapper implements RowMapper<Wallet> {

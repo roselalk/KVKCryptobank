@@ -41,15 +41,19 @@ public class JdbcAssetDAO implements AssetDAO {
     }
 
     @Override
-    public void store(Asset asset) {
-        jdbcTemplate.update(connection -> insertAssetStatement(asset, connection));
+    public void save(Asset asset) {
+        String sql = "INSERT INTO Asset (Ticker, Name) VALUES (?,?)";
+        jdbcTemplate.update(sql, asset.getTicker(), asset.getName());
     }
 
-    private PreparedStatement insertAssetStatement(Asset asset, Connection connection) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO Asset (Ticker, Name) VALUES (?, ?)");
-        ps.setString(1, asset.getTicker());
-        ps.setString(2, asset.getName());
-        return ps;
+    @Override
+    public void delete(Asset asset) {
+
+    }
+
+    @Override
+    public void update(Asset asset) {
+
     }
 
     private class AssetRowMapper implements RowMapper<Asset> {
