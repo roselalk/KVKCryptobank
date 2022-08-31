@@ -3,6 +3,8 @@ package com.example.kamervankrypto.service;
 import com.example.kamervankrypto.repository.LoginDAO;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+
 @Service
 public class LoginService {
 
@@ -28,7 +30,7 @@ public class LoginService {
         return loginDAO.hashPassword(password, salt);
     }
 
-    public boolean loginDetailsCorrect(String email, String password) {
+    public boolean loginDetailsCorrect(String email, String password) throws SQLException {
         return loginDAO.loginDetailsCorrect(email, password);
     }
 

@@ -1,10 +1,13 @@
 package com.example.kamervankrypto.repository;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.SQLWarningException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
 
 @Repository
 public class JdbcLoginDao implements LoginDAO {
@@ -26,8 +29,14 @@ public class JdbcLoginDao implements LoginDAO {
     }
 
     public String getSalt(String email) {
-        String sql = "SELECT Salt FROM Trader WHERE Email = ?";
-        return jdbcTemplate.queryForObject(sql, String.class, email);
+        String salt = BCrypt.gensalt();
+        try {
+            String sql = "SELECT Salt FROM Trader WHERE Email = ?";
+            salt = jdbcTemplate.queryForObject(sql, String.class, email);
+        } catch (EmptyResultDataAccessException emailNotFound) {
+            System.out.println("SQL Fout in JdbcLoginDAO.getSalt: " + emailNotFound.getMessage());
+        }
+        return salt;
     }
 
     @Override
@@ -36,16 +45,13 @@ public class JdbcLoginDao implements LoginDAO {
     }
 
     public boolean loginDetailsCorrect(String email, String password) {
-        //check of email bestaat in db
-        String sql = "SELECT Password FROM Trader WHERE Email = ?";
-        String foundPassword = jdbcTemplate.queryForObject(sql, String.class, email);
-        if (foundPassword == null) {
-            //TODO oplossen wat er gebeurt als de email niet in de db wordt gevonden
-            System.out.println("Geen wachtwoord gevonden");
-            return false;
-        } else {
-            //check of ww in db en opgegeven ww hetzelfde zijn
+        try {
+            String sql = "SELECT Password FROM Trader WHERE Email = ?";
+            String foundPassword = jdbcTemplate.queryForObject(sql, String.class, email);
             return password.equals(foundPassword);
+        } catch (EmptyResultDataAccessException emailNotFound) {
+            System.out.println("SQL Fout in JdbcLoginDAO.loginDetailsCorrect: " + emailNotFound.getMessage());
         }
+        return false;
     }
 }

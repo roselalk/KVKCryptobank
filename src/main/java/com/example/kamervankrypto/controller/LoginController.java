@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @RestController
 @RequestMapping(value = "/login")
 public class LoginController {
@@ -19,7 +21,7 @@ public class LoginController {
 
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody Login login) {
+    public ResponseEntity<String> login(@RequestBody Login login) throws SQLException {
         String salt = loginService.getSalt(login.getEmail());
         String hashedPassword = loginService.hashPassword(login.getPassword(), salt);
         if (loginService.loginDetailsCorrect(login.getEmail(), hashedPassword)) {
