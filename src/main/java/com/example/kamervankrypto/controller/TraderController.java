@@ -1,6 +1,7 @@
 package com.example.kamervankrypto.controller;
 
 import com.example.kamervankrypto.model.Trader;
+import com.example.kamervankrypto.service.LoginService;
 import com.example.kamervankrypto.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -17,10 +17,12 @@ import java.util.Optional;
 public class TraderController {
 
     private TraderService traderService;
+    private LoginService loginService;
 
     @Autowired
-    public TraderController(TraderService traderService) {
+    public TraderController(TraderService traderService, LoginService loginService) {
         this.traderService = traderService;
+        this.loginService = loginService;
     }
 
     @GetMapping
@@ -49,11 +51,24 @@ public class TraderController {
         return traderService.getByName(name);
     }
 
-    @PutMapping
+    @PutMapping(value = "/register")
     @ResponseBody
-    List<Trader> createTrader(@RequestBody Trader trader) {
-        traderService.save(trader);
-        return traderService.getAll();
+    ResponseEntity<String> createTrader(@RequestBody Trader trader) {
+        if (loginService.checkPasswordRequirements(trader.getPassword())) {
+            //Generate Salt
+            String salt = loginService.generateSalt();
+            //Hash het password+salt
+            String hashedPassword = loginService.hashPassword(trader.getPassword(), salt);
+            //Stel de hash in als password
+            trader.setPassword(hashedPassword);
+            //Stel de salt in
+            trader.setSalt(salt);
+            //Sla de trader op, dus met hash ipv opgegeven password
+            traderService.save(trader);
+            return ResponseEntity.ok("Registratie succesvol.");
+        } else {
+            return ResponseEntity.ok("Je wachtwoord moet uit minimaal 8 karakters bestaan.");
+        }
     }
 
     //Zet alle gegevens van de Trader die je wil wijzigen in de body
