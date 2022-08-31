@@ -42,7 +42,7 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "/allTransactionsForTrader")
+    @GetMapping(value = "/allForTrader")
     @ResponseBody
     List<Transaction> getAllTransactionsForTrader(@RequestBody Trader trader) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getAllTransactionsForTrader(trader));
@@ -53,7 +53,7 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "/allTransactionsAsSeller")
+    @GetMapping(value = "/allAsSeller")
     @ResponseBody
     List<Transaction> getTransactionBySeller(@RequestBody Trader seller) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getTransactionBySeller(seller));
@@ -64,7 +64,7 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "/allTransactionsAsBuyer")
+    @GetMapping(value = "/allAsBuyer")
     @ResponseBody
     List<Transaction> getTransactionByBuyer(@RequestBody Trader buyer) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getTransactionByBuyer(buyer));
@@ -80,6 +80,12 @@ public class TransactionController {
         transactionService.createTransaction(transaction);
         //  TODO: Unclear if this should give a return, returns getAll() for testing purposes.
         return transactionService.getAll();
+    }
+
+    @PostMapping
+    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
+        transactionService.updateTransaction(transaction);
+        return ResponseEntity.ok(transaction);
     }
 
     @DeleteMapping("/{idTransaction}")

@@ -17,5 +17,9 @@ public interface TransactionDAO {
 
     List<Transaction> getTransactionBySellerId(int idSeller);
 
+    void updateTransaction(Transaction Transaction);
+
     void deleteTransaction(int idTransaction);
+
+
 }

@@ -43,6 +43,10 @@ public class TransactionService {
         transactionDAO.createTransaction(transaction);
     }
 
+    public void updateTransaction(Transaction transaction) {
+        transactionDAO.updateTransaction(transaction);
+    }
+
     public void deleteTransaction(int idTransaction) {
         transactionDAO.deleteTransaction(idTransaction);
     }
