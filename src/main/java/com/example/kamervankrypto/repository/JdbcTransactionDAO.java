@@ -6,8 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -27,7 +26,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
         return jdbcTemplate.query(sql, new TransactionRowMapper());
     }
 
-    //  Fins single transaction for give Transaction ID.
+    //  Finds single transaction for give Transaction ID.
     @Override
     public Transaction findById(int idTransaction) {
         String sql = "SELECT * FROM Transaction WHERE idTransaction = ?";
@@ -81,7 +80,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
     public void deleteTransaction(int idTransaction) {
         String sql = "DELETE FROM Transaction WHERE idTransaction = ?";
         jdbcTemplate.update(sql, idTransaction);
-        System.out.println("Delete succesfull?");
+        System.out.println("Deletion of Transaction with id=" + idTransaction + " was successful.");
     }
 
     private class TransactionRowMapper implements RowMapper<Transaction> {

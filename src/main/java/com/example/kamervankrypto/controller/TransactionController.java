@@ -78,7 +78,7 @@ public class TransactionController {
     @PutMapping
     List<Transaction> createTransaction(@RequestBody Transaction transaction) {
         transactionService.createTransaction(transaction);
-        //  TODO: Unclear if this should give a return.
+        //  TODO: Unclear if this should give a return, returns getAll() for testing purposes.
         return transactionService.getAll();
     }
 

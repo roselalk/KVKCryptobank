@@ -49,25 +49,22 @@ public class TransactionRepository {
     //  Returns a single list containing all transactions relating to a given trader.
     public List<Transaction> getAllTransactionsForTrader(Trader trader) {
         List<Transaction> t_all = new ArrayList<>();
-        for (Transaction t_buyer : getTransactionByBuyer(trader)) {
-            t_all.add(t_buyer);
-        }
-        for (Transaction t_seller : getTransactionBySeller(trader)) {
-            t_all.add(t_seller);
-        }
+        t_all.addAll(getTransactionByBuyer(trader));
+        t_all.addAll(getTransactionBySeller(trader));
         return t_all;
-    }
 
-    //  Returns a list of transactions where the given trader is seller.
-    public List<Transaction> getTransactionBySeller(Trader seller) {
-        String sql = "SELECT * FROM transaction WHERE idSeller = ?;";
-        return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper(), seller.getID());
     }
 
     //  Returns a list of transactions where the given trader is buyer.
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
         String sql = "SELECT * FROM transaction WHERE idBuyer = ?;";
         return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper(), buyer.getID());
+    }
+
+    //  Returns a list of transactions where the given trader is seller.
+    public List<Transaction> getTransactionBySeller(Trader seller) {
+        String sql = "SELECT * FROM transaction WHERE idSeller = ?;";
+        return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper(), seller.getID());
     }
 
     //  Inserts Traders(buyer/seller) and Asset into Transaction based on DB-references, returning a complete
