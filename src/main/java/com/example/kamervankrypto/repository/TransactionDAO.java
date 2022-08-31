@@ -11,11 +11,11 @@ public interface TransactionDAO {
 
     Transaction findById(int idTransaction);
 
-    void update(Transaction transaction);
-
-    void save(Transaction transaction);
+    void createTransaction(Transaction transaction);
 
     List<Transaction> getTransactionByBuyerId(int idBuyer);
 
     List<Transaction> getTransactionBySellerId(int idSeller);
+
+    void deleteTransaction(int idTransaction);
 }

@@ -27,20 +27,23 @@ public class TransactionService {
         return transactionRepository.findById(id);
     }
 
+    public List<Transaction> getAllTransactionsForTrader(Trader trader) {
+        return transactionRepository.getAllTransactionsForTrader(trader);
+    }
+
+    public List<Transaction> getTransactionBySeller(Trader seller) {
+        return transactionRepository.getTransactionBySeller(seller);
+    }
+
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
         return transactionRepository.getTransactionByBuyer(buyer);
     }
 
-    public List<Transaction> getTransactionByBuyerId(int buyerId) {
-        return transactionDAO.getTransactionByBuyerId(buyerId);
+    public void createTransaction(Transaction transaction) {
+        transactionDAO.createTransaction(transaction);
     }
 
-    public List<Transaction> getTransactionBySeller(Trader seller) {
-        return transactionRepository.getTransactionByBuyer(seller);
+    public void deleteTransaction(int idTransaction) {
+        transactionDAO.deleteTransaction(idTransaction);
     }
-
-    public List<Transaction> getTransactionBySellerId(int sellerID) {
-        return transactionDAO.getTransactionBySellerId(sellerID);
-    }
-
 }

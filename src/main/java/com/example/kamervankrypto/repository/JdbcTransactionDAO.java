@@ -20,12 +20,14 @@ public class JdbcTransactionDAO implements TransactionDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    //  Finds all transactions in Database.
     @Override
     public List<Transaction> findAll() {
         String sql = "SELECT * FROM Transaction;";
         return jdbcTemplate.query(sql, new TransactionRowMapper());
     }
 
+    //  Fins single transaction for give Transaction ID.
     @Override
     public Transaction findById(int idTransaction) {
         String sql = "SELECT * FROM Transaction WHERE idTransaction = ?";
@@ -37,9 +39,8 @@ public class JdbcTransactionDAO implements TransactionDAO {
         }
     }
 
-    @Override
     public void update(Transaction transaction) {
-        //  TODO Discuss in team:
+        //  TODO Discuss in team / With PO:
         //  Updating  Transactions should not be possible: Updating a single transaction implies the recalculation
         //  of all following transaction, because updating a transaction may create a state where not enough saldo is
         //  available to complete any given following transaction.
@@ -47,8 +48,8 @@ public class JdbcTransactionDAO implements TransactionDAO {
     }
 
     @Override
-        //  TODO Toevoegen met auto-increment.
-    public void save(Transaction transaction) {
+    //  TODO Toevoegen met auto-increment.
+    public void createTransaction(Transaction transaction) {
         String sql = "insert into Transaction " +
                 "(idTransaction, Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker )" +
                 " values (?,?,?,?,?,?,?)";
@@ -62,18 +63,25 @@ public class JdbcTransactionDAO implements TransactionDAO {
                 transaction.getAsset().getTicker());
     }
 
+    //  TODO Possibly redundant, may be useful for use in other repositories, otherwise remove later.
     @Override
     public List<Transaction> getTransactionByBuyerId(int idBuyer) {
         String sql = "SELECT * FROM Transaction WHERE idBuyer = ?";
-        List<Transaction> resultList = jdbcTemplate.query(sql, new TransactionRowMapper(), idBuyer);
-        return resultList;
+        return jdbcTemplate.query(sql, new TransactionRowMapper(), idBuyer);
     }
 
+    //  TODO Possibly redundant, may be useful for use in other repositories, otherwise remove later.
     @Override
     public List<Transaction> getTransactionBySellerId(int idSeller) {
         String sql = "SELECT * FROM Transaction WHERE idSeller = ?";
-        List<Transaction> resultList = jdbcTemplate.query(sql, new TransactionRowMapper(), idSeller);
-        return resultList;
+        return jdbcTemplate.query(sql, new TransactionRowMapper(), idSeller);
+    }
+
+    @Override
+    public void deleteTransaction(int idTransaction) {
+        String sql = "DELETE FROM Transaction WHERE idTransaction = ?";
+        jdbcTemplate.update(sql, idTransaction);
+        System.out.println("Delete succesfull?");
     }
 
     private class TransactionRowMapper implements RowMapper<Transaction> {
