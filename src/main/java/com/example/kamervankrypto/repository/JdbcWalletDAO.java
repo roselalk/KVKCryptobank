@@ -67,7 +67,6 @@ public class JdbcWalletDAO implements WalletDAO {
 
     //todo: we might not need this method, but it is here for CRUD functionality
     @Override
-
     public void delete(int idWallet) {
         String sql = "delete from wallet where idWallet = ?;";
         jdbcTemplate.update(sql, idWallet);
@@ -94,6 +93,3 @@ public class JdbcWalletDAO implements WalletDAO {
         }
     }
 }
-
-
-
