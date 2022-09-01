@@ -5,16 +5,9 @@ import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.repository.TokenDAO;
 import com.example.kamervankrypto.repository.TraderDAO;
 import io.jsonwebtoken.*;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-
-import io.jsonwebtoken.security.Keys;
-
-import java.security.Key;
 import java.util.Date;
 import java.util.UUID;
 
@@ -68,11 +61,10 @@ public class TokenService {
                     .parseClaimsJws(token);
 
             // we can safely trust the JWT
-
             System.out.println(jws.toString());
 
         } catch (JwtException ex) {
-            System.out.println("Token niet correct");
+            System.out.println("Token niet correct"); // TODO: juiste response geven!
 
             // we *cannot* use the JWT as intended by its creator
         }
