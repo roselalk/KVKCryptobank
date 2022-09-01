@@ -108,4 +108,18 @@ public class Transaction {
     public int hashCode() {
         return Objects.hash(idTransaction, Amount1, transactionFee, transactionDateTime, buyer, seller, asset);
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "idTransaction=" + idTransaction +
+                ", Amount1=" + Amount1 +
+                ", transactionFee=" + transactionFee +
+                ", transactionDateTime='" + transactionDateTime + '\'' +
+                ", buyer=" + buyer +
+                ", seller=" + seller +
+                ", asset=" + asset +
+                '}';
+    }
 }
+

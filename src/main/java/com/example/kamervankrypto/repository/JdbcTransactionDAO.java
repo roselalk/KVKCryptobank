@@ -65,7 +65,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
 
     //  TODO Discuss in team / With PO:
     //  Updating  Transactions should not be possible: Updating a single transaction implies the recalculation
-    //  of all following transaction, because updating a transaction may create a state where not enough saldo is
+    //  of all following transactions, because updating a transaction may create a state where not enough saldo is
     //  available to complete any given following transaction.
     //  Transactions should be considered final, updating only being possible through corrective transactions.
     //  Method is only here for demonstration of CRUD-Functionality.

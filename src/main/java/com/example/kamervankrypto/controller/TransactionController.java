@@ -33,7 +33,7 @@ public class TransactionController {
     //  TODO Likely to be redundant, not useful from user perspective.
     @GetMapping(value = "/{idTransaction}")
     @ResponseBody
-    Transaction getTraderById(@PathVariable("idTransaction") int id) {
+    Transaction getTransactionById(@PathVariable("idTransaction") int id) {
         Optional<Transaction> transaction = Optional.ofNullable(transactionService.getById(id));
         if (transaction.isPresent()) {
             return transaction.get();
