@@ -19,26 +19,30 @@ public class PortfolioRepository {
         this.rateDAO = rateDAO;
     }
 
+    private void setRatesForAsset (Asset asset) {
+        List<Rate> rates = rateDAO.getAllByTicker(asset.getTicker());
+        for (Rate r : rates) {
+            r.setAsset(asset);
+        }
+        asset.setHistoricalRates(rates);
+    }
+
+    private void fillReferences(Trader trader, Portfolio portfolio) {
+        portfolio.setTrader(trader);
+        Map<Asset, Double> assets = portfolio.getAssets();
+        assets.keySet().forEach(this::setRatesForAsset);
+        portfolio.setAssets(assets);
+    }
+
     public Portfolio findByTrader (Trader trader) {
         Portfolio portfolio = portfolioDAO.findByTraderId(trader.getID());
-        portfolio.setTrader(trader);
-        for (Asset a: portfolio.getAssets().keySet()) {
-            List<Rate> rates = rateDAO.getAllByTicker(a.getTicker());
-            for (Rate r : rates) {
-                r.setAsset(a);
-            }
-            a.setHistoricalRates(rates);
-        }
+        fillReferences(trader, portfolio);
         return portfolio;
     }
 
     public Portfolio findWalletByTraderAndTicker(Trader trader, String ticker) {
         Portfolio portfolio = portfolioDAO.findWalletByTraderIdAndTicker(trader.getID(), ticker);
-        portfolio.setTrader(trader);
-        Map<Asset, Double> assets = portfolio.getAssets();
-        assets.keySet().forEach(asset ->
-                asset.setHistoricalRates(rateDAO.getAllByTicker(asset.getTicker())));
-        portfolio.setAssets(assets);
+        fillReferences(trader, portfolio);
         return portfolio;
     }
 
