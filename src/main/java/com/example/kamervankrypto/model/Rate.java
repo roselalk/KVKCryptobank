@@ -2,26 +2,14 @@ package com.example.kamervankrypto.model;
 
 import java.util.Objects;
 
-public class Rate {
-
-    private int rateId;
+public class Rate implements Comparable<Rate>{
     private double value;
     private String date;
-    private Asset pair;
+    private Asset asset;
 
-
-    public Rate(int rateId, double value, String date) {
-        this.rateId = rateId;
+    public Rate(double value, String date) {
         this.value = value;
         this.date = date;
-    }
-
-    public int getRateId() {
-        return rateId;
-    }
-
-    public void setRateId(int rateId) {
-        this.rateId = rateId;
     }
 
     public double getValue() {
@@ -40,31 +28,28 @@ public class Rate {
         this.date = date;
     }
 
-    public Asset getPair() {
-        return pair;
+    public Asset getAsset() {
+        return asset;
     }
 
-    public void setPair(Asset pair) {
-        this.pair = pair;
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Rate rate)) return false;
-        return getRateId() == rate.getRateId();
+        return Double.compare(rate.getValue(), getValue()) == 0 && getDate().equals(rate.getDate()) && Objects.equals(getAsset(), rate.getAsset());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRateId());
+        return Objects.hash(getValue(), getDate(), getAsset());
     }
 
     @Override
-    public String toString() {
-        return "Rate{" +
-                "value=" + value +
-                ", date='" + date + '\'' +
-                '}';
+    public int compareTo(Rate o) {
+        return this.date.compareTo(o.date);
     }
 }

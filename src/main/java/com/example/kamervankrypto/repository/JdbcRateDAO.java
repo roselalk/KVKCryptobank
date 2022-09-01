@@ -4,8 +4,6 @@ import com.example.kamervankrypto.model.Rate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -40,26 +38,13 @@ public class JdbcRateDAO implements RateDAO {
 
     @Override
     public void store(Rate rate) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> insertRateStatement(rate, connection), keyHolder);
-        int newKey = keyHolder.getKey().intValue();
-        rate.setRateId(newKey);
-    }
 
-    private PreparedStatement insertRateStatement(Rate rate, Connection connection) throws SQLException {
-        PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO Rate (RateDateTime, Ticker, Rate) VALUES (?, ?, ?)",
-                Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1, rate.getDate());
-        ps.setString(2, rate.getPair().getTicker()); //waar komt deze vandaan? //TODO
-        ps.setDouble(3, rate.getValue());
-        return ps;
     }
 
     private class RateRowMapper implements RowMapper<Rate> {
         @Override
         public Rate mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            return new Rate(resultSet.getInt("RateId"), resultSet.getDouble("Rate"), resultSet.getString("RateDateTime"));
+            return new Rate(resultSet.getDouble("Rate"), resultSet.getString("RateDateTime"));
         }
     }
 }
