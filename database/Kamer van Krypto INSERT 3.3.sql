@@ -67,7 +67,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `trader` WRITE;
 /*!40000 ALTER TABLE `trader` DISABLE KEYS */;
-INSERT INTO `trader` VALUES (1,'password','Paul',NULL,'McCartney',298791823,'1942-05-15','Maple St','15','83291MA','Liverpool','macca@hotmail.com',1),(2,'wachtwoord','John',NULL,'Lennon',298791822,'31-09-1941','Oak St','42','83291LI','Liverpool','johnnieboy@yahoo.com',1),(3,'pw','Ringo',NULL,'Starr',292391822,'31-10-1944','Tree St','8','82191LI','Liverpool','starr@gmail.com',1),(4,'ww','George',NULL,'Harrisson',298791222,'14-03-1945','Fig St','9A','83291PL','Liverpool','awesomeguitarguy@live.nl',1),(5,'password2','Paul2',NULL,'McCartney2',298791824,'1984-05-15','Maple St','15','83291MA','Liverpool2','macca2@hotmail.com',1),(6,'pinky','Chad','mc','Monster',147259963,'1962-2-28','Loser lane','13','1313NL','Rotterdam','misterlittlewillie@useless.nl',1);
+INSERT INTO `trader` VALUES (1,'password',NULL,'Paul',NULL,'McCartney',298791823,'1942-05-15','Maple St','15','83291MA','LIverpool','macca@hotmail.com',1),(2,'wachtwoord',NULL,'John',NULL,'Lennon',298791822,'31-09-1941','Oak St','42','83291LI','Liverpool','Johnnieboy@yahoo.com',1),(3,'pw',NULL,'Ringo',NULL,'Starr',292391822,'31-10-1944','Tree St','8','82191LI','Liverpool','starr@gmail.com',1),(4,'ww',NULL,'George',NULL,'Harrisson',298791222,'14-03-1945','Fig St','9a','83291PL','Liverpool','awesomeguitarguy@live.nl',1),(5,'password2',NULL,'Paul2',NULL,'McCartney2',298791824,'1984-05-15','Maple St','15','83291MA','Liverpool2','macca2@hotmail.com',1),(6,'pinky',NULL,'Chad','mc','Monster',147259963,'1962-02-28','Loser Lane','13','1313NL','Rotterdam','misterlittlewillie@useless.nl',1);
 /*!40000 ALTER TABLE `trader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,4 +98,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-29 16:53:23
+-- Dump completed on 2022-09-01 12:17:36

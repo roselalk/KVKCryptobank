@@ -19,8 +19,8 @@ USE `KamerVanKrypto` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Trader` (
   `idTrader` INT NOT NULL AUTO_INCREMENT,
-  `Password` VARCHAR(100) NOT NULL,
-  `Salt` VARCHAR(100) NULL,
+  `Password` VARCHAR(256) NOT NULL,
+  `Salt` VARCHAR(256) NULL,
   `FirstName` VARCHAR(45) NULL,
   `Prefix` VARCHAR(45) NULL,
   `Name` VARCHAR(45) NOT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`BankAccount` (
   `Saldo` DOUBLE NOT NULL,
   `SaldoDateTime` VARCHAR(45) NOT NULL,
   `IBAN` VARCHAR(18) NOT NULL,
-  PRIMARY KEY (`idTrader`),
+  PRIMARY KEY (`idTrader`, `SaldoDateTime`),
   CONSTRAINT `Owns_Bank_Account`
     FOREIGN KEY (`idTrader`)
     REFERENCES `KamerVanKrypto`.`Trader` (`idTrader`)
