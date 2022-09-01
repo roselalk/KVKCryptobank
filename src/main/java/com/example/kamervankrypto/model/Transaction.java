@@ -11,26 +11,32 @@ public class Transaction {
     private Trader seller;
     private Asset asset;
 
+    //  All-args constructor.
     public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime, Trader buyer, Trader seller, Asset asset) {
         this.idTransaction = idTransaction;
         this.Amount1 = amount1;
         this.transactionFee = transactionFee;
-        this.transactionDateTime =transactionDateTime;
+        this.transactionDateTime = transactionDateTime;
         this.buyer = buyer;
         this.seller = seller;
         this.asset = asset;
     }
 
+    //  Partial constructor, excludes objects of other classes.
     public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime) {
         this.idTransaction = idTransaction;
         this.Amount1 = amount1;
         this.transactionFee = transactionFee;
-        this.transactionDateTime =transactionDateTime;
+        this.transactionDateTime = transactionDateTime;
         this.buyer = null;
         this.seller = null;
         this.asset = null;
     }
 
+    public Transaction() {
+    }
+
+    //  Getters and Setters.
     public int getIdTransaction() {
         return idTransaction;
     }
@@ -79,16 +85,41 @@ public class Transaction {
         this.asset = asset;
     }
 
+    public String getTransactionDateTime() {
+        return transactionDateTime;
+    }
+
+    public void setTransactionDateTime(String transactionDateTime) {
+        this.transactionDateTime = transactionDateTime;
+    }
+
+    //  Equals and Hashcode methods.
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return idTransaction == that.idTransaction && Double.compare(that.Amount1, Amount1) == 0 && Double.compare(that.transactionFee, transactionFee) == 0 && buyer.equals(that.buyer) && seller.equals(that.seller) && asset.equals(that.asset);
+        return idTransaction == that.idTransaction && Double.compare(that.Amount1, Amount1) == 0 && Double.compare(that.transactionFee, transactionFee) == 0 && transactionDateTime.equals(that.transactionDateTime) && buyer.equals(that.buyer) && seller.equals(that.seller) && asset.equals(that.asset);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idTransaction, Amount1, transactionFee, buyer, seller, asset);
+        return Objects.hash(idTransaction, Amount1, transactionFee, transactionDateTime, buyer, seller, asset);
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "idTransaction=" + idTransaction +
+                ", Amount1=" + Amount1 +
+                ", transactionFee=" + transactionFee +
+                ", transactionDateTime='" + transactionDateTime + '\'' +
+                ", buyer=" + buyer +
+                ", seller=" + seller +
+                ", asset=" + asset +
+                '}';
     }
 }
+
