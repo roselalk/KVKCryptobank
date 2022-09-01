@@ -19,7 +19,8 @@ USE `KamerVanKrypto` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Trader` (
   `idTrader` INT NOT NULL AUTO_INCREMENT,
-  `Password` VARCHAR(45) NOT NULL,
+  `Password` VARCHAR(256) NOT NULL,
+  `Salt` VARCHAR(256) NULL,
   `FirstName` VARCHAR(45) NULL,
   `Prefix` VARCHAR(45) NULL,
   `Name` VARCHAR(45) NOT NULL,
@@ -33,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Trader` (
   `Active` TINYINT NOT NULL,
   PRIMARY KEY (`idTrader`),
   UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
-  UNIQUE INDEX `idUser_UNIQUE` (`idTrader` ASC) VISIBLE)
+  UNIQUE INDEX `idUser_UNIQUE` (`idTrader` ASC) VISIBLE,
+  UNIQUE INDEX `Salt_UNIQUE` (`Salt` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -52,12 +54,11 @@ ENGINE = InnoDB;
 -- Table `KamerVanKrypto`.`Wallet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Wallet` (
-  `idWallet` INT NOT NULL AUTO_INCREMENT,
   `idTrader` INT NOT NULL,
   `Ticker` VARCHAR(5) NOT NULL,
   `Amount` DOUBLE NOT NULL,
   INDEX `Contains` (`Ticker` ASC) VISIBLE,
-  PRIMARY KEY (`idWallet`),
+  PRIMARY KEY (`idTrader`, `Ticker`),
   CONSTRAINT `Owns_asset`
     FOREIGN KEY (`idTrader`)
     REFERENCES `KamerVanKrypto`.`Trader` (`idTrader`)
@@ -78,7 +79,6 @@ CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Rate` (
   `RateDateTime` VARCHAR(45) NOT NULL,
   `Ticker` VARCHAR(5) NOT NULL,
   `Rate` DOUBLE NOT NULL,
-  UNIQUE INDEX `Rate_UNIQUE` (`Rate` ASC) VISIBLE,
   PRIMARY KEY (`RateDateTime`, `Ticker`),
   INDEX `Valued_at` (`Ticker` ASC) VISIBLE,
   CONSTRAINT `Valued_at`
@@ -155,11 +155,12 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `KamerVanKrypto`.`Token` (
   `idToken` INT NOT NULL AUTO_INCREMENT,
   `idTrader` INT NOT NULL,
-  `Token` VARCHAR(45) NOT NULL,
+  `Token` VARCHAR(256) NOT NULL,
   `ValidUntil` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idToken`),
   UNIQUE INDEX `idToken_UNIQUE` (`idToken` ASC) VISIBLE,
   INDEX `Trader` (`idTrader` ASC) VISIBLE,
+  UNIQUE INDEX `Token_UNIQUE` (`Token` ASC) VISIBLE,
   CONSTRAINT `Trader`
     FOREIGN KEY (`idTrader`)
     REFERENCES `KamerVanKrypto`.`Trader` (`idTrader`)

@@ -3,11 +3,11 @@ package com.example.kamervankrypto.model;
 import java.util.List;
 import java.util.Objects;
 
-public class Asset {
+public class Asset implements Comparable<Asset> {
 
     private String ticker;
     private String name;
-    private Rate value;
+    private Rate rate;
     private List<Rate> historicalRates;
 
     public Asset(String ticker, String name) {
@@ -31,12 +31,12 @@ public class Asset {
         this.name = name;
     }
 
-    public Rate getValue() {
-        return value;
+    public Rate getRate() {
+        return rate;
     }
 
-    public void setValue(Rate value) {
-        this.value = value;
+    public void setRate(Rate rate) {
+        this.rate = rate;
     }
 
     public List<Rate> getHistoricalRates() {
@@ -61,10 +61,11 @@ public class Asset {
 
     @Override
     public String toString() {
-        return "Asset{" +
-                "ticker='" + ticker + '\'' +
-                ", name='" + name + '\'' +
-                ", rate=" + value +
-                '}';
+        return name + " (" + ticker + ")";
+    }
+
+    @Override
+    public int compareTo(Asset o) {
+        return this.name.compareTo(o.name);
     }
 }

@@ -15,11 +15,11 @@ public class RateService {
         this.rateDAO = rateDAO;
     }
 
-    public List<Rate> getAllByTicker(String ticker){
+    public List<Rate> getAllByTicker(String ticker) {
         return rateDAO.getAllByTicker(ticker);
     }
 
-    public void store(Rate rate){
+    public void store(Rate rate) {
         rateDAO.store(rate);
     }
 

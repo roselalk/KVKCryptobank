@@ -3,7 +3,6 @@ package com.example.kamervankrypto.repository;
 import com.example.kamervankrypto.model.Asset;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AssetDAO {
 
@@ -13,5 +12,9 @@ public interface AssetDAO {
 
     Asset getByName(String name);
 
-    void store(Asset asset);
+    void save(Asset asset);
+
+    void delete(Asset asset);
+
+    void update(Asset asset);
 }
