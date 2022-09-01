@@ -14,7 +14,6 @@ class PortfolioTest {
 
     @BeforeEach
     public void portfolioSetup(){
-        //todo: ask teachers if I should mock model classes or we just assume the constructors work
 
         asset1 = new Asset("A1", "Asset1");
         Rate rate1a1 = new Rate(2.2, "date");
