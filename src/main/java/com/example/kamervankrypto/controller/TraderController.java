@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,7 @@ public class TraderController {
     }
 
     //Full path: {localhost:8080}/traders/user/{id}
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/users/{id}")
     @ResponseBody
     Trader getTraderById(@PathVariable("id") int id) {
         Optional<Trader> trader = Optional.ofNullable(traderService.getById(id));
@@ -45,7 +47,7 @@ public class TraderController {
 
     //Full path: {localhost:8080}/traders/find?traderName={starr}
     //(In Postman: vul in tot en met find, en voeg in de Params toe traderName en de (achter)naam die je wil zoeken
-    @GetMapping (value = "/user/find")
+    @GetMapping (value = "/users/find")
     @ResponseBody
     List<Trader> getTraderByName(@RequestParam("traderName") String name) {
         return traderService.getByName(name);
@@ -65,26 +67,28 @@ public class TraderController {
             trader.setSalt(salt);
             //Sla de trader op, dus met hash ipv opgegeven password
             traderService.save(trader);
-            return ResponseEntity.ok("Registratie succesvol.");
+            URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/traders/register").toUriString());
+            return ResponseEntity.created(uri).body("Registratie succesvol");
         } else {
             return ResponseEntity.ok("Je wachtwoord moet uit minimaal 8 karakters bestaan.");
         }
     }
 
     //Zet alle gegevens van de Trader die je wil wijzigen in de body
-    @PostMapping ("/user/update")
+    @PostMapping ("/users/update")
     public ResponseEntity<Trader> updateTrader(@RequestBody Trader trader) {
         traderService.upate(trader);
         return ResponseEntity.ok(trader);
     }
 
     //Zet het ID van de Trader die je wil verwijderen in de path (dus na /delete). Hoeft niks in de body
-    @DeleteMapping ("/user/delete/{id}")
+    @DeleteMapping ("/users/delete/{id}")
     public ResponseEntity<Trader> deleteTrader(@PathVariable(value = "id") int ID) {
         Trader trader = traderService.getById(ID);
         traderService.delete(ID);
         return ResponseEntity.ok(trader);
     }
+
 
 
 }
