@@ -25,6 +25,7 @@ public class PortfolioRepository {
             r.setAsset(asset);
         }
         asset.setHistoricalRates(rates);
+        asset.setRate(rates.get(0));
     }
 
     private void fillReferences(Trader trader, Portfolio portfolio) {

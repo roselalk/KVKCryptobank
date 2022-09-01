@@ -1,5 +1,6 @@
 package com.example.kamervankrypto.controller;
 
+import com.example.kamervankrypto.dto.PortfolioDTO;
 import com.example.kamervankrypto.model.Portfolio;
 import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.service.PortfolioService;
@@ -18,8 +19,8 @@ public class PortfolioController {
 
     @GetMapping(value = "/assets")
     @ResponseBody
-    Portfolio getPortfolioByTrader(@RequestBody Trader trader) {
-        return portfolioService.getByTrader(trader);
+    PortfolioDTO getPortfolioByTrader(@RequestBody Trader trader) {
+        return new PortfolioDTO(portfolioService.getByTrader(trader));
     }
 
     @GetMapping(value = "/assets/{ticker}")
@@ -30,15 +31,15 @@ public class PortfolioController {
 
     @PostMapping (value = "/update/{ticker}/{amountToAddOrSubtract}")
     @ResponseBody
-    Portfolio updateWallet(@RequestBody Trader trader, @PathVariable("ticker") String ticker, @PathVariable("amountToAddOrSubtract") double amount) {
+    PortfolioDTO updateWallet(@RequestBody Trader trader, @PathVariable("ticker") String ticker, @PathVariable("amountToAddOrSubtract") double amount) {
         portfolioService.createOrUpdate(trader, ticker, amount);
-        return portfolioService.getByTrader(trader);
+        return new PortfolioDTO(portfolioService.getByTrader(trader));
     }
 
     @DeleteMapping ("/delete/{ticker}")
-    public Portfolio deleteWallet(@RequestBody Trader trader, @PathVariable(value = "ticker") String ticker) {
+    public PortfolioDTO deleteWallet(@RequestBody Trader trader, @PathVariable(value = "ticker") String ticker) {
         portfolioService.delete(trader, ticker);
-        return portfolioService.getByTrader(trader);
+        return new PortfolioDTO(portfolioService.getByTrader(trader));
     }
 
 }
