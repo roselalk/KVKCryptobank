@@ -57,13 +57,13 @@ public class TransactionRepository {
 
     //  Returns a list of transactions where the given trader is buyer.
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
-        String sql = "SELECT * FROM transaction WHERE idBuyer = ?;";
+        String sql = "SELECT * FROM transaction WHERE idBuyer = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper(), buyer.getID());
     }
 
     //  Returns a list of transactions where the given trader is seller.
     public List<Transaction> getTransactionBySeller(Trader seller) {
-        String sql = "SELECT * FROM transaction WHERE idSeller = ?;";
+        String sql = "SELECT * FROM transaction WHERE idSeller = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper(), seller.getID());
     }
 

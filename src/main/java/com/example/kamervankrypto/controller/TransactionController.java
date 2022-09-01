@@ -83,9 +83,9 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
+    ResponseEntity<Transaction> updateTransaction(@RequestBody Transaction transaction) {
         transactionService.updateTransaction(transaction);
-        return ResponseEntity.ok(transaction);
+        return ResponseEntity.ok(transactionService.getById(transaction.getIdTransaction()));
     }
 
     @DeleteMapping("/{idTransaction}")
