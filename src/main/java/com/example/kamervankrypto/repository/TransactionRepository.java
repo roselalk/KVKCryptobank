@@ -28,10 +28,10 @@ public class TransactionRepository {
         this.assetDAO = assetDAO;
     }
 
-    //  Returns a list of known transactions in the DB.
+    //  Returns a list of known transactions in the DB, descending from the newest idTransaction.
     //  TODO: Should not be used by basic user, this is an admin-only method.
     public List<Transaction> findAll() {
-        String sql = "SELECT * FROM transaction;";
+        String sql = "SELECT * FROM Transaction ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRepositoryRowMapper());
     }
 

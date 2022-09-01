@@ -1,14 +1,16 @@
 package com.example.kamervankrypto.repository;
 
-import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class JdbcTransactionDAO implements TransactionDAO {
@@ -20,10 +22,10 @@ public class JdbcTransactionDAO implements TransactionDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    //  Finds all transactions in Database.
+    //  Returns a list of known transactions in the DB, descending from the newest idTransaction.
     @Override
     public List<Transaction> findAll() {
-        String sql = "SELECT * FROM Transaction;";
+        String sql = "SELECT * FROM Transaction ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper());
     }
 
@@ -39,20 +41,26 @@ public class JdbcTransactionDAO implements TransactionDAO {
         }
     }
 
+    //  Creates a new DB-entry for given Transaction
     @Override
-    //  TODO Toevoegen met auto-increment.
     public void createTransaction(Transaction transaction) {
-        String sql = "insert into Transaction " +
-                "(idTransaction, Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker )" +
-                " values (?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql,
-                transaction.getIdTransaction(),
-                transaction.getAmount1(),
-                transaction.getTransactionFee(),
-                transaction.getTransactionDateTime(),
-                transaction.getBuyer().getID(),
-                transaction.getSeller().getID(),
-                transaction.getAsset().getTicker());
+        KeyHolder keyholder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> transactionPreparedStatement(transaction, connection), keyholder);
+        int newKey = Objects.requireNonNull(keyholder.getKey()).intValue();
+        transaction.setIdTransaction(newKey);
+    }
+
+    private PreparedStatement transactionPreparedStatement(Transaction transaction, Connection connection) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(
+                "INSERT INTO Transaction (Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker) VALUES (?,?,?,?,?,?)",
+                Statement.RETURN_GENERATED_KEYS);
+        ps.setDouble(1, transaction.getAmount1());
+        ps.setDouble(2, transaction.getTransactionFee());
+        ps.setString(3, transaction.getTransactionDateTime());
+        ps.setInt(4, transaction.getBuyer().getID());
+        ps.setInt(5, transaction.getSeller().getID());
+        ps.setString(6, transaction.getAsset().getTicker());
+        return ps;
     }
 
     //  TODO Discuss in team / With PO:

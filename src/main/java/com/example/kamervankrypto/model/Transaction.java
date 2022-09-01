@@ -41,6 +41,10 @@ public class Transaction {
         return idTransaction;
     }
 
+    public void setIdTransaction(int idTransaction) {
+        this.idTransaction = idTransaction;
+    }
+
     public double getAmount1() {
         return Amount1;
     }
