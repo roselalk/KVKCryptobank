@@ -28,9 +28,9 @@ public class PortfolioController {
         return portfolioService.getWalletByTraderAndTicker(trader, ticker);
     }
 
-    @PostMapping (value = "/update/{ticker}/{amount}")
+    @PostMapping (value = "/update/{ticker}/{amountToAddOrSubtract}")
     @ResponseBody
-    Portfolio updateWallet(@RequestBody Trader trader, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount) {
+    Portfolio updateWallet(@RequestBody Trader trader, @PathVariable("ticker") String ticker, @PathVariable("amountToAddOrSubtract") double amount) {
         portfolioService.createOrUpdate(trader, ticker, amount);
         return portfolioService.getByTrader(trader);
     }
