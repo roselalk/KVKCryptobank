@@ -1,4 +1,5 @@
 package com.example.kamervankrypto.repository;
+
 import com.example.kamervankrypto.model.Asset;
 import com.example.kamervankrypto.model.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class JdbcWalletDAO implements WalletDAO {
     JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public JdbcWalletDAO (JdbcTemplate jdbcTemplate) {
+    public JdbcWalletDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -28,7 +29,7 @@ public class JdbcWalletDAO implements WalletDAO {
     public List<Wallet> findAllByTraderId(int id) {
         String sql = "SELECT w.idWallet, w.amount, a.ticker, a.name " +
                 "FROM wallet w left join asset a on w.ticker = a.ticker  where w.idtrader = ?;";
-        return jdbcTemplate.query(sql,  new WalletsWithAssetsResultSetExtractor(), id);
+        return jdbcTemplate.query(sql, new WalletsWithAssetsResultSetExtractor(), id);
     }
 
     public Optional<Wallet> findByTraderIdAndAsset(int id, String ticker) {
@@ -92,6 +93,3 @@ public class JdbcWalletDAO implements WalletDAO {
         }
     }
 }
-
-
-

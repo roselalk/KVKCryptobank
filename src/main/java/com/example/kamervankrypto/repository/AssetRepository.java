@@ -1,8 +1,11 @@
 package com.example.kamervankrypto.repository;
 
 import com.example.kamervankrypto.model.Asset;
+import com.example.kamervankrypto.model.Rate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -23,46 +26,66 @@ public class AssetRepository {
     public List<Asset> getAllWithCurrentRate() {
         List<Asset> assetList = assetDAO.getAll();
         for (Asset a : assetList) {
-            a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
+            Rate r = rateDAO.getCurrentByTicker(a.getTicker());
+            if (r != null) {
+                a.setRate(r);
+                r.setAsset(a);
+            }
         }
         return assetList;
     }
 
     public Asset getByTickerWithCurrentRate(String ticker) {
         Asset a = assetDAO.getByTicker(ticker);
-        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
-        return a;
+        if (a != null) {
+            Rate r = rateDAO.getCurrentByTicker(ticker);
+            a.setRate(r);
+            r.setAsset(a);
+            return a;
+        }
+        return null;
     }
 
     public Asset getByNameWithCurrentRate(String name) {
         Asset a = assetDAO.getByName(name);
-        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
+        a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
         return a;
     }
 
     public Asset getByTickerWithHistoricalRates(String ticker) {
         Asset a = assetDAO.getByTicker(ticker);
-        a.setHistoricalRates(rateDAO.getAllByTicker(ticker));
+        List<Rate> rates = rateDAO.getAllByTicker(ticker);
+        for (Rate r : rates) {
+            r.setAsset(a);
+        }
+        a.setHistoricalRates(rates);
         return a;
     }
 
     public Asset getByTickerWithAllRates(String ticker) {
         Asset a = assetDAO.getByTicker(ticker);
-        a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
+        a.setRate(rateDAO.getCurrentByTicker(a.getTicker()));
         a.setHistoricalRates(rateDAO.getAllByTicker(a.getTicker()));
         return a;
     }
 
     public List<Asset> getAllWithAllRates() {
         List<Asset> assetList = assetDAO.getAll();
-        for (Asset a : assetList) {
-            a.setValue(rateDAO.getCurrentByTicker(a.getTicker()));
-            a.setHistoricalRates(rateDAO.getAllByTicker(a.getTicker()));
+        if (!assetList.isEmpty()) {
+            for (Asset a : assetList) {
+                List<Rate> rateList = rateDAO.getAllByTicker(a.getTicker());
+                a.setHistoricalRates(rateList);
+                for (Rate r : rateList) {
+                    r.setAsset(a);
+                    a.setRate(r);
+                }
+            }
+            return assetList;
         }
-        return assetList;
+        return Collections.emptyList();
     }
 
-    public void store(Asset asset){
-        assetDAO.store(asset);
+    public void store(Asset asset) {
+        assetDAO.save(asset);
     }
 }
