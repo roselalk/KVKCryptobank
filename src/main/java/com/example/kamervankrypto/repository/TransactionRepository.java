@@ -52,8 +52,8 @@ public class TransactionRepository {
     //  Helper method, inserts Traders and asset into Transaction
     private Transaction insertTradersAndAsset(Transaction t) {
         int id = t.getIdTransaction();
-        t.setBuyer(traderDAO.findById(transactionDAO.getBuyerIdByTransactionId(id)));
-        t.setSeller(traderDAO.findById(transactionDAO.getSellerIdByTransactionId(id)));
+        t.setBuyer(traderDAO.findById(transactionDAO.getIdBuyerByIdTransaction(id)));
+        t.setSeller(traderDAO.findById(transactionDAO.getIdSellerByIdTransaction(id)));
         t.setAsset(assetDAO.getByTicker(transactionDAO.getTickerByTransactionId(id)));
         return t;
     }

@@ -16,9 +16,9 @@ public interface TransactionDAO {
 
     List<Transaction> getTransactionsBySellerId(int idSeller);
 
-    int getBuyerIdByTransactionId(int idTransaction);
+    int getIdBuyerByIdTransaction(int idTransaction);
 
-    int getSellerIdByTransactionId(int idTransaction);
+    int getIdSellerByIdTransaction(int idTransaction);
 
     String getTickerByTransactionId(int idTransaction);
 

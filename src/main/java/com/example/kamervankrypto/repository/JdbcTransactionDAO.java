@@ -48,6 +48,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
         int newKey = Objects.requireNonNull(keyholder.getKey()).intValue();
         transaction.setIdTransaction(newKey);
     }
+
     //  Helper method to facilitate auto-increment of idTransaction in createTransaction()
     private PreparedStatement transactionPreparedStatement(Transaction transaction, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(
@@ -68,7 +69,6 @@ public class JdbcTransactionDAO implements TransactionDAO {
     //  available to complete any given following transaction.
     //  Transactions should be considered final, updating only being possible through corrective transactions.
     //  Method is only here for demonstration of CRUD-Functionality.
-
     public void updateTransaction(Transaction transaction) {
         jdbcTemplate.update("UPDATE transaction SET Amount1 = ?, TransactionFee = ?, TransactionDateTime = ?, idBuyer = ?, idSeller = ?, Ticker = ? WHERE idTransaction = ?",
                 transaction.getAmount1(),
@@ -80,37 +80,43 @@ public class JdbcTransactionDAO implements TransactionDAO {
                 transaction.getIdTransaction());
     }
 
+    //  Delete entry from DB for given idTransaction
     public void deleteTransaction(int idTransaction) {
         String sql = "DELETE FROM Transaction WHERE idTransaction = ?";
         jdbcTemplate.update(sql, idTransaction);
         System.out.println("Deletion of Transaction with id=" + idTransaction + " was successful.");
     }
 
+    //  Returns list of transactions for given idBuyer
     public List<Transaction> getTransactionsByBuyerId(int idBuyer) {
         String sql = "SELECT * FROM Transaction WHERE idBuyer = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), idBuyer);
     }
 
+    //  Returns list of transactions for given idSeller
     public List<Transaction> getTransactionsBySellerId(int idSeller) {
         String sql = "SELECT * FROM Transaction WHERE idSeller = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), idSeller);
     }
 
-    public int getSellerIdByTransactionId(int idTransaction) {
+    //  Returns idBuyer for given idTransaction
+    public int getIdBuyerByIdTransaction(int idTransaction) {
+        String sql = "SELECT idBuyer FROM Transaction WHERE idTransaction=?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, idTransaction);
+    }    //  Returns idSeller for given idTransaction
+
+    //  Returns idSeller for given idTransaction
+    public int getIdSellerByIdTransaction(int idTransaction) {
         String sql = "SELECT idSeller FROM Transaction WHERE idTransaction=? ORDER BY idTransaction DESC;";
         return jdbcTemplate.queryForObject(sql, Integer.class, idTransaction);
     }
 
-    public int getBuyerIdByTransactionId(int idTransaction) {
-        String sql = "SELECT idBuyer FROM Transaction WHERE idTransaction=?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, idTransaction);
-    }
-
+    //  Returns Ticker for given idTransaction
     public String getTickerByTransactionId(int idTransaction) {
         String sql = "SELECT Ticker FROM Transaction WHERE idTransaction=?";
         return jdbcTemplate.queryForObject(sql, String.class, idTransaction);
     }
-
+    //  Helper method returns basic Transaction-Object, without Buyer, Seller and Asset.
     private class TransactionRowMapper implements RowMapper<Transaction> {
         @Override
         public Transaction mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
