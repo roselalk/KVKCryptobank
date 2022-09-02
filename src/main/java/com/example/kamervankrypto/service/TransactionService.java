@@ -32,11 +32,11 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionBySeller(Trader seller) {
-        return transactionRepository.getTransactionBySeller(seller);
+        return transactionRepository.getTransactionsBySeller(seller);
     }
 
     public List<Transaction> getTransactionByBuyer(Trader buyer) {
-        return transactionRepository.getTransactionByBuyer(buyer);
+        return transactionRepository.getTransactionsByBuyer(buyer);
     }
 
     public void createTransaction(Transaction transaction) {

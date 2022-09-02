@@ -36,16 +36,16 @@ public class TransactionRepository {
 
     //  Returns a single list containing all transactions relating to a given trader.
     public List<Transaction> getAllTransactionsForTrader(Trader trader) {
-        return Stream.concat(getTransactionByBuyer(trader).stream(), getTransactionBySeller(trader).stream()).toList();
+        return Stream.concat(getTransactionsByBuyer(trader).stream(), getTransactionsBySeller(trader).stream()).toList();
     }
 
     //  Returns a list of transactions where the given trader is buyer.
-    public List<Transaction> getTransactionByBuyer(Trader buyer) {
+    public List<Transaction> getTransactionsByBuyer(Trader buyer) {
         return insertIntoList(transactionDAO.getTransactionsByBuyerId(buyer.getID()));
     }
 
     //  Returns a list of transactions where the given trader is seller.
-    public List<Transaction> getTransactionBySeller(Trader seller) {
+    public List<Transaction> getTransactionsBySeller(Trader seller) {
         return insertIntoList(transactionDAO.getTransactionsBySellerId(seller.getID()));
     }
 
