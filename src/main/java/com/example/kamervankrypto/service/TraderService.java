@@ -4,7 +4,6 @@ import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.repository.TraderDAO;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Service
@@ -36,8 +35,8 @@ public class TraderService {
         traderDAO.update(trader);
     }
 
-    public void delete(int ID) {
-        traderDAO.delete(ID);
+    public void delete(int id) {
+        traderDAO.delete(id);
     }
 
 

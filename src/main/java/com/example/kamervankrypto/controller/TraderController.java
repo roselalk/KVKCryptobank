@@ -4,10 +4,8 @@ import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.service.LoginService;
 import com.example.kamervankrypto.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -92,9 +90,9 @@ public class TraderController {
 
     //Zet het ID van de Trader die je wil verwijderen in de path (dus na /delete). Hoeft niks in de body
     @DeleteMapping ("/users/delete/{id}")
-    public ResponseEntity<Trader> deleteTrader(@PathVariable(value = "id") int ID) {
-        Trader trader = traderService.getById(ID);
-        traderService.delete(ID);
+    public ResponseEntity<Trader> deleteTrader(@PathVariable(value = "id") int id) {
+        Trader trader = traderService.getById(id);
+        traderService.delete(id);
         return ResponseEntity.ok(trader);
     }
 

@@ -2,12 +2,8 @@ package com.example.kamervankrypto.repository;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.SQLWarningException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.sql.SQLException;
-import java.sql.SQLWarning;
 
 @Repository
 public class JdbcLoginDao implements LoginDAO {

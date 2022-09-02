@@ -1,6 +1,5 @@
 package com.example.kamervankrypto.model;
 
-import java.util.Objects;
 
 public class Trader {
     private int ID;
@@ -148,8 +147,6 @@ public class Trader {
         this.salt = salt;
     }
 
-//    @Override
-//    public String toString() {return firstName + " " + prefix + " " + name + ", ID " + ID;}
 
     @Override
     public String toString() {
