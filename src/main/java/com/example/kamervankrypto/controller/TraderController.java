@@ -29,19 +29,29 @@ public class TraderController {
 
     @GetMapping
     @ResponseBody
-    List<Trader> getTraders() {
-        return traderService.getAll();
+    String getTraders() {
+        if (traderService.getAll() != null) {
+            return traderService.getAll().toString();
+        } else {
+            return "Geen traders gevonden.";
+        }
+    }
+
+    @GetMapping(value = "/json")
+    @ResponseBody
+    List<Trader> getTradersJSON() {
+            return traderService.getAll();
     }
 
     //Full path: {localhost:8080}/traders/user/{id}
     @GetMapping(value = "/users/{id}")
     @ResponseBody
-    Trader getTraderById(@PathVariable("id") int id) {
+    String getTraderById(@PathVariable("id") int id) {
         Optional<Trader> trader = Optional.ofNullable(traderService.getById(id));
         if (trader.isPresent()) {
-            return trader.get();
+            return trader.get().toString();
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No trader found with this ID!");
+            return "Geen trader met dit ID gevonden!";
         }
     }
 
@@ -50,11 +60,10 @@ public class TraderController {
     @GetMapping (value = "/users/find")
     @ResponseBody
     List<Trader> getTraderByName(@RequestParam("traderName") String name) {
-        return traderService.getByName(name);
+            return traderService.getByName(name);
     }
 
     @PutMapping(value = "/register")
-    @ResponseBody
     ResponseEntity<String> createTrader(@RequestBody Trader trader) {
         if (loginService.checkPasswordRequirements(trader.getPassword())) {
             //Generate Salt
