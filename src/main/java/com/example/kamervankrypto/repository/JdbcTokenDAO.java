@@ -51,13 +51,15 @@ public class JdbcTokenDAO implements TokenDAO{
     @Override
     public int getTraderIDFromToken(String token){ // aanname token is altijd uniek
         String sql = "Select idTrader from Token Where Token = ?";
-        int idTrader = 0;
-        if(jdbcTemplate.queryForObject(sql, Integer.class, token) > 0) {
-            idTrader = jdbcTemplate.queryForObject(sql, Integer.class, token);
-        }
-        // TODO: wat als er geen trader gevonden wordt? Zou niet moeten kunnen, gezien deze wil valid is (zie service class).
-        return idTrader;
 
+        int idTrader = 0;
+        try{
+            idTrader = jdbcTemplate.queryForObject(sql, Integer.class, token);
+        }catch (NullPointerException ex){
+            System.out.println("No trader linked to this token");
+        }
+
+        return idTrader;
     }
 
 }
