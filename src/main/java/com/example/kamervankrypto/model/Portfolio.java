@@ -13,10 +13,6 @@ public class Portfolio {
         this.assets = assets;
     }
 
-    public Portfolio(Trader trader) {
-        this.trader = trader;
-    }
-
     public Portfolio(Map<Asset, Double> assets) {
         this.assets = assets;
     }
@@ -59,7 +55,7 @@ public class Portfolio {
 
     public Map<Asset, Double> calculateValueAssetsInEuros() {
         Map<Asset, Double> mapInEuros = new TreeMap<>();
-        assets.forEach((asset, amount) -> mapInEuros.put(asset, amount * asset.getHistoricalRates().get(0).getValue()));
+        assets.forEach((asset, amount) -> mapInEuros.put(asset, amount * asset.getRate().getValue()));
         return mapInEuros;
     }
 

@@ -1,6 +1,5 @@
 package com.example.kamervankrypto.repository;
 
-import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Transaction;
 
 import java.util.List;
@@ -13,9 +12,15 @@ public interface TransactionDAO {
 
     void createTransaction(Transaction transaction);
 
-    List<Transaction> getTransactionByBuyerId(int idBuyer);
+    List<Transaction> getTransactionsByBuyerId(int idBuyer);
 
-    List<Transaction> getTransactionBySellerId(int idSeller);
+    List<Transaction> getTransactionsBySellerId(int idSeller);
+
+    int getIdBuyerByIdTransaction(int idTransaction);
+
+    int getIdSellerByIdTransaction(int idTransaction);
+
+    String getTickerByTransactionId(int idTransaction);
 
     void updateTransaction(Transaction Transaction);
 

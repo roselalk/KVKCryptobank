@@ -11,29 +11,12 @@ public class Transaction {
     private Trader seller;
     private Asset asset;
 
-    //  All-args constructor.
-    public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime, Trader buyer, Trader seller, Asset asset) {
-        this.idTransaction = idTransaction;
-        this.Amount1 = amount1;
-        this.transactionFee = transactionFee;
-        this.transactionDateTime = transactionDateTime;
-        this.buyer = buyer;
-        this.seller = seller;
-        this.asset = asset;
-    }
-
     //  Partial constructor, excludes objects of other classes.
     public Transaction(int idTransaction, double amount1, double transactionFee, String transactionDateTime) {
         this.idTransaction = idTransaction;
         this.Amount1 = amount1;
         this.transactionFee = transactionFee;
         this.transactionDateTime = transactionDateTime;
-        this.buyer = null;
-        this.seller = null;
-        this.asset = null;
-    }
-
-    public Transaction() {
     }
 
     //  Getters and Setters.
@@ -94,8 +77,6 @@ public class Transaction {
     }
 
     //  Equals and Hashcode methods.
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
