@@ -24,8 +24,8 @@ public class PortfolioService {
         return portfolioRepository.findWalletByTraderAndTicker(trader, ticker);
     }
 
-    public void createOrUpdate(Trader trader, String ticker, double amount) {
-        portfolioRepository.createOrUpdate(trader, ticker, amount);
+    public void createOrUpdate(Trader trader, String ticker, double amountToAddOrSubtract) {
+        portfolioRepository.createOrUpdate(trader, ticker, amountToAddOrSubtract);
     }
 
     public void delete(Trader trader, String ticker) {

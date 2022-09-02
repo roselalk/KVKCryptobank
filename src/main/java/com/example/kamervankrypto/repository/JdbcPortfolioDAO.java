@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Repository
 public class JdbcPortfolioDAO implements PortfolioDAO{
@@ -58,7 +58,7 @@ public class JdbcPortfolioDAO implements PortfolioDAO{
     private class PortfolioWithAssetsResultSetExtractor implements ResultSetExtractor<Portfolio> {
         @Override
         public Portfolio extractData(ResultSet rs) throws SQLException, DataAccessException {
-            Map<Asset, Double> assets = new HashMap<>();
+            Map<Asset, Double> assets = new TreeMap<>();
             while (rs.next()) {
                 Asset asset = new Asset(rs.getString("ticker"), rs.getString("name"));
                 assets.put(asset, rs.getDouble("amount"));
