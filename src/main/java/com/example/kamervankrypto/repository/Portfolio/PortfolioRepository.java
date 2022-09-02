@@ -1,9 +1,10 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Portfolio;
 
 import com.example.kamervankrypto.model.Asset;
 import com.example.kamervankrypto.model.Portfolio;
 import com.example.kamervankrypto.model.Rate;
 import com.example.kamervankrypto.model.Trader;
+import com.example.kamervankrypto.repository.Rate.RateDAO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

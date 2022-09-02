@@ -2,8 +2,8 @@ package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Portfolio;
 import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.PortfolioDAO;
-import com.example.kamervankrypto.repository.PortfolioRepository;
+import com.example.kamervankrypto.repository.Portfolio.PortfolioDAO;
+import com.example.kamervankrypto.repository.Portfolio.PortfolioRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Trader;
 
 import com.example.kamervankrypto.model.Trader;
 

@@ -1,10 +1,10 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Asset;
 
 import com.example.kamervankrypto.model.Asset;
 import com.example.kamervankrypto.model.Rate;
+import com.example.kamervankrypto.repository.Rate.RateDAO;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 

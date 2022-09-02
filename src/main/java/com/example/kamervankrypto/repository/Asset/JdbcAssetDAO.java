@@ -1,6 +1,7 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Asset;
 
 import com.example.kamervankrypto.model.Asset;
+import com.example.kamervankrypto.repository.Asset.AssetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class JdbcAssetDAO implements AssetDAO {

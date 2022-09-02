@@ -1,6 +1,7 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Rate;
 
 import com.example.kamervankrypto.model.Rate;
+import com.example.kamervankrypto.repository.Rate.RateDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

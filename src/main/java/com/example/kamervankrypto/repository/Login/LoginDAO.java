@@ -1,4 +1,4 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Login;
 
 import java.sql.SQLException;
 

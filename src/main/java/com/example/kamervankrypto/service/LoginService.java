@@ -1,6 +1,6 @@
 package com.example.kamervankrypto.service;
 
-import com.example.kamervankrypto.repository.LoginDAO;
+import com.example.kamervankrypto.repository.Login.LoginDAO;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;

@@ -1,7 +1,9 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Transaction;
 
 import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Transaction;
+import com.example.kamervankrypto.repository.Asset.AssetDAO;
+import com.example.kamervankrypto.repository.Trader.TraderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

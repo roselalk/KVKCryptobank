@@ -2,15 +2,13 @@ package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.TokenSecurityKey;
 import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.TokenDAO;
-import com.example.kamervankrypto.repository.TraderDAO;
+import com.example.kamervankrypto.repository.Token.TokenDAO;
+import com.example.kamervankrypto.repository.Trader.TraderDAO;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
