@@ -23,14 +23,14 @@ public class JdbcTransactionDAO implements TransactionDAO {
     }
 
     //  Returns a list of known transactions in the DB, descending from the newest idTransaction.
-    @Override
+
     public List<Transaction> findAll() {
         String sql = "SELECT * FROM Transaction ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper());
     }
 
     //  Finds single transaction for give Transaction ID.
-    @Override
+
     public Transaction findById(int idTransaction) {
         String sql = "SELECT * FROM Transaction WHERE idTransaction = ?";
         List<Transaction> resultList = jdbcTemplate.query(sql, new TransactionRowMapper(), idTransaction);
@@ -42,14 +42,13 @@ public class JdbcTransactionDAO implements TransactionDAO {
     }
 
     //  Creates a new DB-entry for given Transaction
-    @Override
     public void createTransaction(Transaction transaction) {
         KeyHolder keyholder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> transactionPreparedStatement(transaction, connection), keyholder);
         int newKey = Objects.requireNonNull(keyholder.getKey()).intValue();
         transaction.setIdTransaction(newKey);
     }
-
+    //  Helper method to facilitate auto-increment of idTransaction in createTransaction()
     private PreparedStatement transactionPreparedStatement(Transaction transaction, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(
                 "INSERT INTO Transaction (Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker) VALUES (?,?,?,?,?,?)",
@@ -69,7 +68,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
     //  available to complete any given following transaction.
     //  Transactions should be considered final, updating only being possible through corrective transactions.
     //  Method is only here for demonstration of CRUD-Functionality.
-    @Override
+
     public void updateTransaction(Transaction transaction) {
         jdbcTemplate.update("UPDATE transaction SET Amount1 = ?, TransactionFee = ?, TransactionDateTime = ?, idBuyer = ?, idSeller = ?, Ticker = ? WHERE idTransaction = ?",
                 transaction.getAmount1(),
@@ -81,27 +80,36 @@ public class JdbcTransactionDAO implements TransactionDAO {
                 transaction.getIdTransaction());
     }
 
-    @Override
     public void deleteTransaction(int idTransaction) {
         String sql = "DELETE FROM Transaction WHERE idTransaction = ?";
         jdbcTemplate.update(sql, idTransaction);
         System.out.println("Deletion of Transaction with id=" + idTransaction + " was successful.");
     }
 
-    //  TODO Possibly redundant, may be useful for use in other repositories, otherwise remove later.
-    @Override
-    public List<Transaction> getTransactionByBuyerId(int idBuyer) {
-        String sql = "SELECT * FROM Transaction WHERE idBuyer = ?";
+    public List<Transaction> getTransactionsByBuyerId(int idBuyer) {
+        String sql = "SELECT * FROM Transaction WHERE idBuyer = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), idBuyer);
     }
 
-    //  TODO Possibly redundant, may be useful for use in other repositories, otherwise remove later.
-    @Override
-    public List<Transaction> getTransactionBySellerId(int idSeller) {
-        String sql = "SELECT * FROM Transaction WHERE idSeller = ?";
+    public List<Transaction> getTransactionsBySellerId(int idSeller) {
+        String sql = "SELECT * FROM Transaction WHERE idSeller = ? ORDER BY idTransaction DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), idSeller);
     }
 
+    public int getSellerIdByTransactionId(int idTransaction) {
+        String sql = "SELECT idSeller FROM Transaction WHERE idTransaction=? ORDER BY idTransaction DESC;";
+        return jdbcTemplate.queryForObject(sql, Integer.class, idTransaction);
+    }
+
+    public int getBuyerIdByTransactionId(int idTransaction) {
+        String sql = "SELECT idBuyer FROM Transaction WHERE idTransaction=?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, idTransaction);
+    }
+
+    public String getTickerByTransactionId(int idTransaction) {
+        String sql = "SELECT Ticker FROM Transaction WHERE idTransaction=?";
+        return jdbcTemplate.queryForObject(sql, String.class, idTransaction);
+    }
 
     private class TransactionRowMapper implements RowMapper<Transaction> {
         @Override
@@ -110,7 +118,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
                     resultSet.getInt("idTransaction"),
                     resultSet.getDouble("Amount1"),
                     resultSet.getDouble("TransactionFee"),
-                    resultSet.getString("TransactiondateTime"));
+                    resultSet.getString("TransactionDateTime"));
         }
     }
 }
