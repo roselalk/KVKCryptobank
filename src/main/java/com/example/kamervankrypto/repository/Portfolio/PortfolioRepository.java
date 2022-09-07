@@ -1,62 +1,51 @@
 package com.example.kamervankrypto.repository.Portfolio;
 
-import com.example.kamervankrypto.model.Asset;
-import com.example.kamervankrypto.model.Portfolio;
-import com.example.kamervankrypto.model.Rate;
-import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.Rate.RateDAO;
+import com.example.kamervankrypto.model.*;
+import com.example.kamervankrypto.repository.Asset.AssetRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Repository
 public class PortfolioRepository {
-    private PortfolioDAO portfolioDAO;
-    private RateDAO rateDAO;
+    private WalletDAO walletDAO;
+    private AssetRepository assetRepository;
 
-    public PortfolioRepository(PortfolioDAO portfolioDAO, RateDAO rateDAO) {
-        this.portfolioDAO = portfolioDAO;
-        this.rateDAO = rateDAO;
-    }
-
-    private void setRatesForAsset (Asset asset) {
-        List<Rate> rates = rateDAO.getAllByTicker(asset.getTicker());
-        for (Rate r : rates) {
-            r.setAsset(asset);
-        }
-        asset.setHistoricalRates(rates);
-        asset.setRate(rates.get(0));
-    }
-
-    private void fillReferences(Trader trader, Portfolio portfolio) {
-        portfolio.setTrader(trader);
-        Map<Asset, Double> assets = portfolio.getAssets();
-        assets.keySet().forEach(this::setRatesForAsset);
-        portfolio.setAssets(assets);
+    public PortfolioRepository(WalletDAO walletDAO, AssetRepository assetRepository) {
+        this.walletDAO = walletDAO;
+        this.assetRepository = assetRepository;
     }
 
     public Portfolio findByTrader (Trader trader) {
-        Portfolio portfolio = portfolioDAO.findByTraderId(trader.getID());
-        fillReferences(trader, portfolio);
-        return portfolio;
+        List<Wallet> wallets = walletDAO.findAllWalletsByTraderId(trader.getID());
+        Map<Asset, Double> assets = new TreeMap<>();
+        wallets.forEach(wallet -> assets.put(assetRepository.getByTickerWithCurrentRate(wallet.getTicker()), wallet.getAmount()));
+        return new Portfolio(trader, assets);
     }
 
-    public Portfolio findWalletByTraderAndTicker(Trader trader, String ticker) {
-        Portfolio portfolio = portfolioDAO.findWalletByTraderIdAndTicker(trader.getID(), ticker);
-        fillReferences(trader, portfolio);
-        return portfolio;
+    public Wallet findWalletByTraderAndTicker(Trader trader, String ticker) {
+        return walletDAO.findWalletByTraderIdAndTicker(trader.getID(), ticker);
     }
 
     public void createOrUpdate (Trader trader, String ticker, double amountToAddOrSubtract) {
-        Portfolio portfolio = findWalletByTraderAndTicker(trader, ticker);
-        if (portfolio.getAssets().isEmpty()) {
-            portfolioDAO.create(trader.getID(), ticker, amountToAddOrSubtract);
+        Wallet wallet = walletDAO.findWalletByTraderIdAndTicker(trader.getID(), ticker);
+        if (wallet == null) { //if the trader doesn't own the asset
+            if (amountToAddOrSubtract > 0) {
+                walletDAO.createWallet(trader.getID(), ticker, amountToAddOrSubtract);
+            } else {
+                throw new RuntimeException("Can't subtract because trader doesn't own this asset");
+            }
         } else {
-            //since we only have 1 wallet in the portfolio I'm calculating the sum to get the value
-            //todo: think if there is a better way
-            double previousAmount = portfolio.getAssets().values().stream().mapToDouble(Double::doubleValue).sum();
-            portfolioDAO.update(trader.getID(), ticker, previousAmount + amountToAddOrSubtract);
+            double amount = wallet.getAmount() + amountToAddOrSubtract;
+            if (amount > 0) { //add to an existing asset or subtract less than the total amount
+                walletDAO.updateWallet(trader.getID(), ticker, amount);
+            } else if (amount == 0) { //subtract the total amount
+                walletDAO.deleteWallet(trader.getID(), ticker);
+            } else {
+                throw new RuntimeException("Can't subtract because the trader doesn't own enough of this asset");
+            }
         }
     }
 }
