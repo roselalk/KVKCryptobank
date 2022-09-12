@@ -1,4 +1,4 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Rate;
 
 import com.example.kamervankrypto.model.Rate;
 

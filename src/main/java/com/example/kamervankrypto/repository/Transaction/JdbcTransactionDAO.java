@@ -1,6 +1,7 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.Transaction;
 
 import com.example.kamervankrypto.model.Transaction;
+import com.example.kamervankrypto.repository.Transaction.TransactionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

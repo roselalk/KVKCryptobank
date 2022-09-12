@@ -1,4 +1,4 @@
-package com.example.kamervankrypto.repository;
+package com.example.kamervankrypto.repository.BankAccount;
 
 import com.example.kamervankrypto.model.BankAccount;
 import org.springframework.beans.factory.annotation.Autowired;

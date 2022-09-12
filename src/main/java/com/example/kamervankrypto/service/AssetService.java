@@ -1,7 +1,7 @@
 package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Asset;
-import com.example.kamervankrypto.repository.AssetRepository;
+import com.example.kamervankrypto.repository.Asset.AssetRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

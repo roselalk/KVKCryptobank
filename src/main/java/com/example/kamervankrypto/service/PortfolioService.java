@@ -2,17 +2,18 @@ package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Portfolio;
 import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.PortfolioDAO;
-import com.example.kamervankrypto.repository.PortfolioRepository;
+import com.example.kamervankrypto.model.Wallet;
+import com.example.kamervankrypto.repository.Portfolio.PortfolioRepository;
+import com.example.kamervankrypto.repository.Portfolio.WalletDAO;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PortfolioService {
-    PortfolioDAO portfolioDAO;
+    WalletDAO walletDAO;
     PortfolioRepository portfolioRepository;
 
-    public PortfolioService(PortfolioDAO portfolioDAO, PortfolioRepository portfolioRepository) {
-        this.portfolioDAO = portfolioDAO;
+    public PortfolioService(WalletDAO walletDAO, PortfolioRepository portfolioRepository) {
+        this.walletDAO = walletDAO;
         this.portfolioRepository = portfolioRepository;
     }
 
@@ -20,7 +21,7 @@ public class PortfolioService {
         return portfolioRepository.findByTrader(trader);
     }
 
-    public Portfolio getWalletByTraderAndTicker(Trader trader, String ticker) {
+    public Wallet getWalletByTraderAndTicker(Trader trader, String ticker) {
         return portfolioRepository.findWalletByTraderAndTicker(trader, ticker);
     }
 
@@ -29,6 +30,6 @@ public class PortfolioService {
     }
 
     public void delete(Trader trader, String ticker) {
-        portfolioDAO.delete(trader.getID(), ticker);
+        walletDAO.deleteWallet(trader.getID(), ticker);
     }
 }

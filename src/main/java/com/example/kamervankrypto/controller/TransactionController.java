@@ -25,14 +25,12 @@ public class TransactionController {
 
     //  TODO Likely to be redundant,  method is admin-only, may be helpful for overviews of all transactions, discuss in team / With PO.
     @GetMapping
-    @ResponseBody
     List<Transaction> getTransactions() {
         return transactionService.getAll();
     }
 
     //  TODO Likely to be redundant, not useful from user perspective.
     @GetMapping(value = "/{idTransaction}")
-    @ResponseBody
     Transaction getTransactionById(@PathVariable("idTransaction") int id) {
         Optional<Transaction> transaction = Optional.ofNullable(transactionService.getById(id));
         if (transaction.isPresent()) {
@@ -43,7 +41,6 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/allForTrader")
-    @ResponseBody
     List<Transaction> getAllTransactionsForTrader(@RequestBody Trader trader) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getAllTransactionsForTrader(trader));
         if (transactions.isPresent()) {
@@ -54,7 +51,6 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/allAsSeller")
-    @ResponseBody
     List<Transaction> getTransactionBySeller(@RequestBody Trader seller) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getTransactionBySeller(seller));
         if (transactions.isPresent()) {
@@ -65,7 +61,6 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/allAsBuyer")
-    @ResponseBody
     List<Transaction> getTransactionByBuyer(@RequestBody Trader buyer) {
         Optional<List<Transaction>> transactions = Optional.ofNullable(transactionService.getTransactionByBuyer(buyer));
         if (transactions.isPresent()) {
