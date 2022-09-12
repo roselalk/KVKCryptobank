@@ -1,11 +1,13 @@
 package com.example.kamervankrypto.controller;
 
+import com.example.kamervankrypto.config.BadCredentialsException;
 import com.example.kamervankrypto.dto.PortfolioDTO;
 import com.example.kamervankrypto.dto.WalletDTO;
 import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Wallet;
 import com.example.kamervankrypto.service.PortfolioService;
 import com.example.kamervankrypto.service.TokenService;
+import com.example.kamervankrypto.utils.ExceptionMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,28 +30,28 @@ public class PortfolioController {
 
     @GetMapping(value = "/assets")
     @ResponseBody
-    PortfolioDTO getPortfolioByTrader(@RequestBody String token) {
+    ResponseEntity<PortfolioDTO> getPortfolioByTrader(@RequestBody String token) {
         Trader trader = tokenService.checkTokenValidity(token);
         if (trader != null) {
-            return new PortfolioDTO(portfolioService.getByTrader(trader));
+            return ResponseEntity.ok(new PortfolioDTO(portfolioService.getByTrader(trader)));
         } else {
-            throw new ResponseStatusException( HttpStatus.NOT_FOUND, "Token Not Found");
+            throw new BadCredentialsException(ExceptionMessage.INVALID_TOKEN.toString());
         }
     }
 
     @GetMapping(value = "/assets/{ticker}")
     @ResponseBody
-    WalletDTO getWalletByTraderAndTicker(@RequestBody String token, @PathVariable("ticker") String ticker) {
+    ResponseEntity<WalletDTO> getWalletByTraderAndTicker(@RequestBody String token, @PathVariable("ticker") String ticker) {
         Trader trader = tokenService.checkTokenValidity(token);
         if (trader != null) {
             Optional<Wallet> wallet = Optional.ofNullable(portfolioService.getWalletByTraderAndTicker(trader, ticker));
             if (wallet.isPresent()) {
-                return new WalletDTO(wallet.get());
+                return ResponseEntity.ok( new WalletDTO(wallet.get()) );
             } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Asset not found for this user");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.WALLET_NOT_FOUND.toString());
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token Not Found");
+            throw new BadCredentialsException(ExceptionMessage.INVALID_TOKEN.toString());
         }
     }
 
@@ -61,7 +63,7 @@ public class PortfolioController {
             portfolioService.createOrUpdate(trader, ticker, amount);
             return ResponseEntity.ok(new PortfolioDTO(portfolioService.getByTrader(trader)));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token Not Found");
+            throw new BadCredentialsException(ExceptionMessage.INVALID_TOKEN.toString());
         }
     }
 
@@ -72,7 +74,7 @@ public class PortfolioController {
             portfolioService.delete(trader, ticker);
             return ResponseEntity.ok(new PortfolioDTO(portfolioService.getByTrader(trader)));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Token Not Found");
+            throw new BadCredentialsException(ExceptionMessage.INVALID_TOKEN.toString());
         }
     }
 
