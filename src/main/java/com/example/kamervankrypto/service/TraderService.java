@@ -35,8 +35,8 @@ public class TraderService {
         traderDAO.update(trader);
     }
 
-    public void delete(int ID) {
-        traderDAO.delete(ID);
+    public void delete(int id) {
+        traderDAO.delete(id);
     }
 
 
