@@ -1,64 +1,65 @@
 <!DOCTYPE html>
-<html>
+
 <head>
-    <title>Login Kamer van Krypto</title>
+    <title>Login CryptoBank</title>
     <link href="login.css" rel="stylesheet" />
     <script src="login.js" defer></script>
 </head>
 <header>
-    <h1>Welkom op Kamer van Krypto.nl:</h1>
+    <div class="flex-container">
+        <h1 class="header-text">[logo] <b>{CryptoBank}</b></h1>
+        <div class="header-functions">
+            <button class="button-block-red" id="logout" type="submit"> Uitloggen</button>
+        </div>
+    </div>
 </header>
 
 <body>
-<div class="grid-container">
-    <div class="grid-item">
-        <div class="box">
-            <div class="box-header">
-                <h1>Inloggen:</h1>
-            </div>
-            <div class="box-body">
-                <div class="flex-container">
-                    <div class="flex-item-left">
-                        <label name="gebruikersnaam">Gebruikersnaam:</label>
+<div class=background-image>
+    <div class="grid-container">
+        <div class="grid-item">
+            <div class="box">
+                <div class="box-header">
+                    <h3>Log in met uw gegevens:</h3>
+                </div>
+                <div class="box-body">
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <p>
+                                <label name="gebruikersnaam">Gebruikersnaam:</label>
+                            </p>
+                        </div>
+                        <div class="flex-item-right">
+                            <input id="email" type="text" placeholder="..." name="gebruikersnaam" required />
+                        </div>
                     </div>
-                    <div class="flex-item-right">
-                        <input
-                                id="email"
-                                type="text"
-                                placeholder="..."
-                                name="gebruikersnaam"
-                                required
-                        />
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <p>
+                                <label name="password">Wachtwoord:</label>
+                            </p>
+                        </div>
+                        <div class="flex-item-right">
+                            <input id="pw" type="password" placeholder="..." name="password" required />
+                        </div>
                     </div>
                 </div>
-                <div class="flex-container">
-                    <div class="flex-item-left">
-                        <label name="password">Password:</label>
-                    </div>
-                    <div class="flex-item-right">
-                        <input
-                                id="pw"
-                                type="password"
-                                placeholder="..."
-                                name="password"
-                                required
-                        />
-                    </div>
-                </div>
-            </div>
-            <div class="box-footer">
-                <div class="flex-container">
-                    <div class="flex-item-left">
-                        <button id="button" type="submit">Login</button>
-                    </div>
-                    <div class="flex-item-right">
-                        <button type="register">Registreren</button>
+                <div class="box-footer">
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <button class="button-block-green" id="register" type="register"> Registreren</button>
+                        </div>
+                        <div class="flex-item-right">
+                            <button class="button-block-green" id="button" type="submit"> Inloggen</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="footer">
+        &copy; Copyright 2022, Kamer van Krypto
+    </div>
 </div>
 </body>
-<footer></footer>
 </html>
