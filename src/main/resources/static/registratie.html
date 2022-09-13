@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="registratie.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Raleway:wght@100;400;600&display=swap"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <script src="registratie.js" defer></script>
+</head>
+
+<body>
+<!--[if lt IE 7]>
+<p class="browsehappy">
+  You are using an <strong>outdated</strong> browser. Please
+  <a href="#">upgrade your browser</a> to improve your experience.
+</p>
+<![endif]-->
+
+<div class="grid-container">
+  <img
+          class="col-12"
+          id="logo"
+          src="images/logo.png"
+          alt="Logo van Kamer van Krypto: een hoofdletter K, een kleine v, en een omgekeerde K naast elkaar"
+  />
+
+  <div class="row">
+    <h1 id="title" class="col-12">SIGN UP</h1>
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="firstName">Voornaam</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="prefix">Tussenvoegsel</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="lastName">Achternaam</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="BSN">BSN</label>
+    <input class="col-3" type="number" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="dateOfBirth">Geboortedatum</label>
+    <input class="col-3" type="date" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="street">Straat</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="houseNumber">Huisnummer</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="email">Emailadres</label>
+    <input
+            class="col-3"
+            type="text"
+            pattern="^[a-zA-Z0-9.!#$%&amp;'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
+    />
+  </div>
+
+  <div class="row">
+    <label class="col-3" for="whitespace"></label>
+    <label class="col-3" for="password">Wachtwoord</label>
+    <input class="col-3" type="text" />
+  </div>
+
+  <div class="row"class="register">
+    <label class="col-5" for="whitespace"></label>
+    <button id="button" class="col-2" value="Registreer">Registreer</button>
+  </div>
+</div>
+</body>
+</html>
