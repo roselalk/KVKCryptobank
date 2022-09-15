@@ -1,6 +1,12 @@
-let button = document.querySelector("#button");
+let buttonLogin = document.querySelector("#buttonLogin");
+let buttonRegister = document.querySelector("#buttonRegister");
 
-button.addEventListener("click", () => {
+buttonRegister.addEventListener("click", () => {
+    location.href = "../html/registratie.html";
+});
+
+
+buttonLogin.addEventListener("click", () => {
     login();
 });
 
@@ -26,4 +32,5 @@ function login() {
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
+    location.href = "../html/market.html";
 }
