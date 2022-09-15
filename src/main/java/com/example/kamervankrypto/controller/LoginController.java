@@ -21,7 +21,7 @@ public class LoginController {
 
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody Login login) throws SQLException {
+    public ResponseEntity<?> login(@RequestBody Login login) throws SQLException {
         String salt = loginService.getSalt(login.getEmail());
         String hashedPassword = loginService.hashPassword(login.getPassword(), salt);
         if (loginService.loginDetailsCorrect(login.getEmail(), hashedPassword)) {
