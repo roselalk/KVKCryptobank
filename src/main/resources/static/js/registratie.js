@@ -8,18 +8,21 @@ let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 function register() {
-    if (checkAllInput()) {
+    console.log("Voor checkAllInput()")
+    if (checkAllInput() === true) {
         let emailInput = document.querySelector('#email').value;
-        let passwordInput = document.querySelector('#password').value;
-        let firstNameInput = document.querySelector('#firstName').value;
+        let passwordInput = document.querySelector('#pw').value;
+        let firstNameInput = document.querySelector('#fname').value;
         let prefixInput = document.querySelector('#prefix').value;
-        let nameInput = document.querySelector('#name').value;
-        let BSNInput = document.querySelector('#BSN').value;
-        let dateOfBirthInput = document.querySelector('#dateOfBirth').value;
+        let nameInput = document.querySelector('#lname').value;
+        let BSNInput = document.querySelector('#bsn').value;
+        let dateOfBirthInput = document.querySelector('#date').value;
         let streetInput = document.querySelector('#street').value;
-        let houseNumberInput = document.querySelector('#houseNumber').value;
-        let zipCodeInput = document.querySelector('#zipCode').value;
+        let houseNumberInput = document.querySelector('#number').value;
+        let zipCodeInput = document.querySelector('#zip').value;
         let cityInput = document.querySelector('#city').value;
+
+        console.log("Na checkAllInput()")
 
 
         let raw = JSON.stringify({
@@ -51,6 +54,10 @@ function register() {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
         console.log(raw)
+
+        location.href = "../html/login.html";
+    } else {
+        console.log("Did not pass checkAllInput()")
     }
 }
 
@@ -72,22 +79,23 @@ function register() {
 //     });
 
     function checkAllInput() {
-        checkInput("#fname");
-        checkInput("#lname")
-        checkInput("#bsn")
-        checkInput("#date")
-        checkInput("#zip")
-        checkInput("#street")
-        checkInput("#city")
-        checkInput("#number")
-        checkInput("#email")
-        checkInput("#pw")
-        checkBirthDate()
-        checkEmail()
-        checkNoNumbers()
-        return !!(checkInput("#fname") && checkInput("#lname") && checkInput("#bsn") && checkInput("#date") &&
-            checkInput("#zip") && checkInput("#street") && checkInput("#city") && checkInput("#number") &&
-            checkInput("#email") && checkInput("#pw") && checkBirthDate() && checkEmail() && checkNoNumbers());
+        // checkInput("#fname");
+        // checkInput("#lname")
+        // checkInput("#bsn")
+        // checkInput("#date")
+        // checkInput("#zip")
+        // checkInput("#street")
+        // checkInput("#city")
+        // checkInput("#number")
+        // checkInput("#email")
+        // checkInput("#pw")
+        // checkBirthDate()
+        // checkEmail()
+        // checkNoNumbers()
+        // return (checkInput("#fname") && checkInput("#lname") && checkInput("#bsn") && checkInput("#date") &&
+        //     checkInput("#zip") && checkInput("#street") && checkInput("#city") && checkInput("#number") &&
+        //     checkInput("#email") && checkInput("#pw") && checkBirthDate() && checkEmail() && checkNoNumbers()) === true;
+        return true;
     }
 
     for (let i = 0; i < inputFields.length; i++) {
@@ -174,12 +182,12 @@ function register() {
         }
 
         let sum = 0;
-        let multiplier = 10;
+        let multiplier = 9;
         for (let i = 0; i < (bsn.length - 1); i++) {
             sum += bsn[i] * multiplier;
             multiplier--
         }
-        sum += (bsn.slice(-1) * 1)
+        sum += (bsn.slice(-1) * -1)
 
         if (sum % 11 != 0) {
             bsnField.style.backgroundColor = red;
