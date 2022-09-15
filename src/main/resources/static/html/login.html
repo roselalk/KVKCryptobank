@@ -2,20 +2,17 @@
 
 <head>
     <title>Login CryptoBank</title>
-    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/main.css" rel="stylesheet"/>
     <script src="../js/login.js" defer></script>
 </head>
 <header>
     <div class="flex-container">
         <div class="header-logo">
-    <img src="../images/logo-transparent.png" alt="logo" style="height: 48px">
+            <img src="../images/logo-transparent.png" alt="logo" style="height: 48px">
         </div>
-<!--        Header-text leaves space for feedback to users.-->
-    <h1 class="header-text"></h1>
-<!--        Header-functions can contain functions like buttons.-->
-        <div class="header-functions">
-            <button class="button-block-red" id="logout" type="submit"> Uitloggen</button>
-        </div>
+        <!--        Header-text leaves space for feedback to users.-->
+        <h1 class="header-text"></h1>
+        <!--        Header-functions can contain functions like buttons.-->
     </div>
 </header>
 
@@ -31,11 +28,11 @@
                     <div class="flex-container">
                         <div class="flex-item-left">
                             <p>
-                                <label name="gebruikersnaam">Gebruikersnaam:</label>
+                                <label name="gebruikersnaam">E-mailadres:</label>
                             </p>
                         </div>
                         <div class="flex-item-right">
-                            <input id="email" type="text" />
+                            <input id="email" type="text"/>
                         </div>
                     </div>
                     <div class="flex-container">
@@ -45,17 +42,18 @@
                             </p>
                         </div>
                         <div class="flex-item-right">
-                            <input id="pw" type="password"  />
+                            <input type="password" id="password"/>
+                            <input type="checkbox" id="passwordVisibility">
                         </div>
                     </div>
                 </div>
                 <div class="box-footer">
                     <div class="flex-container">
                         <div class="flex-item-left">
-                            <button class="button-block-green" id="register" type="register"> Registreren</button>
+                            <button class="button-block-green" id="buttonRegister" type="register"> Registreren</button>
                         </div>
                         <div class="flex-item-right">
-                            <button class="button-block-green" id="button" type="submit"> Inloggen</button>
+                            <button class="button-block-green" id="buttonLogin" type="submit"> Inloggen</button>
                         </div>
                     </div>
                 </div>
