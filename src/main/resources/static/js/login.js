@@ -21,16 +21,9 @@ function login() {
         headers: myHeaders,
         body: raw,
         redirect: 'follow'
-    };
-    console.log(raw)
-    fetch("http://localhost:8080/login", requestOptions)
+
+    };fetch("http://localhost:8080/login", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
-
-
-    console.log("email: " + emailInput)
-    console.log("wachtwoord: " + passwordInput)
-
-
 }

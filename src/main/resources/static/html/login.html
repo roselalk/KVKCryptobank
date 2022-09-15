@@ -2,12 +2,17 @@
 
 <head>
     <title>Login CryptoBank</title>
-    <link href="login.css" rel="stylesheet" />
-    <script src="login.js" defer></script>
+    <link href="../css/login.css" rel="stylesheet" />
+    <script src="../js/login.js" defer></script>
 </head>
 <header>
     <div class="flex-container">
-        <h1 class="header-text">[logo] <b>{CryptoBank}</b></h1>
+        <div class="header-logo">
+    <img src="../images/logo-transparent.png" alt="logo" style="height: 48px">
+        </div>
+<!--        Header-text leaves space for feedback to users.-->
+    <h1 class="header-text"></h1>
+<!--        Header-functions can contain functions like buttons.-->
         <div class="header-functions">
             <button class="button-block-red" id="logout" type="submit"> Uitloggen</button>
         </div>
