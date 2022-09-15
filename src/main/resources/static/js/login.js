@@ -1,11 +1,13 @@
 let buttonLogin = document.querySelector("#buttonLogin");
 let buttonRegister = document.querySelector("#buttonRegister");
+let passwordVisibility = document.querySelector("#passwordVisibility");
 
+passwordVisibility.addEventListener("click", () => {
+    togglePasswordVisibility();
+});
 buttonRegister.addEventListener("click", () => {
     location.href = "../html/registratie.html";
 });
-
-
 buttonLogin.addEventListener("click", () => {
     login();
 });
@@ -15,7 +17,7 @@ myHeaders.append("Content-Type", "application/json");
 
 function login() {
     let emailInput = document.querySelector('#email').value;
-    let passwordInput = document.querySelector('#pw').value;
+    let passwordInput = document.querySelector('#password').value;
 
     let raw = JSON.stringify({
         "email": emailInput,
@@ -33,4 +35,13 @@ function login() {
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
     location.href = "../html/market.html";
+}
+
+function togglePasswordVisibility(){
+    let x = document.querySelector("#password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
 }
