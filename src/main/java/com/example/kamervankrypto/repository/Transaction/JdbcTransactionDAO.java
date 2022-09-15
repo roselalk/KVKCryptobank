@@ -1,7 +1,6 @@
 package com.example.kamervankrypto.repository.Transaction;
 
 import com.example.kamervankrypto.model.Transaction;
-import com.example.kamervankrypto.repository.Transaction.TransactionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -53,9 +52,9 @@ public class JdbcTransactionDAO implements TransactionDAO {
     //  Helper method to facilitate auto-increment of idTransaction in createTransaction()
     private PreparedStatement transactionPreparedStatement(Transaction transaction, Connection connection) throws SQLException {
         PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO Transaction (Amount1, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker) VALUES (?,?,?,?,?,?)",
+                "INSERT INTO Transaction (TransactionValue, TransactionFee, TransactionDateTime, idBuyer,idSeller,Ticker) VALUES (?,?,?,?,?,?)",
                 Statement.RETURN_GENERATED_KEYS);
-        ps.setDouble(1, transaction.getAmount1());
+        ps.setDouble(1, transaction.getTransactionValue());
         ps.setDouble(2, transaction.getTransactionFee());
         ps.setString(3, transaction.getTransactionDateTime());
         ps.setInt(4, transaction.getBuyer().getID());
@@ -71,8 +70,8 @@ public class JdbcTransactionDAO implements TransactionDAO {
     //  Transactions should be considered final, updating only being possible through corrective transactions.
     //  Method is only here for demonstration of CRUD-Functionality.
     public void updateTransaction(Transaction transaction) {
-        jdbcTemplate.update("UPDATE transaction SET Amount1 = ?, TransactionFee = ?, TransactionDateTime = ?, idBuyer = ?, idSeller = ?, Ticker = ? WHERE idTransaction = ?",
-                transaction.getAmount1(),
+        jdbcTemplate.update("UPDATE transaction SET TransactionValue = ?, TransactionFee = ?, TransactionDateTime = ?, idBuyer = ?, idSeller = ?, Ticker = ? WHERE idTransaction = ?",
+                transaction.getTransactionValue(),
                 transaction.getTransactionFee(),
                 transaction.getTransactionDateTime(),
                 transaction.getBuyer().getID(),
@@ -123,7 +122,7 @@ public class JdbcTransactionDAO implements TransactionDAO {
         public Transaction mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
             return new Transaction(
                     resultSet.getInt("idTransaction"),
-                    resultSet.getDouble("Amount1"),
+                    resultSet.getDouble("TransactionValue"),
                     resultSet.getDouble("TransactionFee"),
                     resultSet.getString("TransactionDateTime"));
         }
