@@ -110,7 +110,7 @@ input {
     max-height: 50vh;
     width: 100vw;
     overflow: hidden;
-    background-image: url("images/skyscrapers.jpg");
+    background-image: url("../images/skyscrapers.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
