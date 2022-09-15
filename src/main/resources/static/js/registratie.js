@@ -79,27 +79,30 @@ function register() {
 //     });
 
     function checkAllInput() {
-        // checkInput("#fname");
-        // checkInput("#lname")
-        // checkInput("#bsn")
-        // checkInput("#date")
-        // checkInput("#zip")
-        // checkInput("#street")
-        // checkInput("#city")
-        // checkInput("#number")
-        // checkInput("#email")
-        // checkInput("#pw")
-        // checkBirthDate()
-        // checkEmail()
-        // checkNoNumbers()
-        // return (checkInput("#fname") && checkInput("#lname") && checkInput("#bsn") && checkInput("#date") &&
-        //     checkInput("#zip") && checkInput("#street") && checkInput("#city") && checkInput("#number") &&
-        //     checkInput("#email") && checkInput("#pw") && checkBirthDate() && checkEmail() && checkNoNumbers()) === true;
-        return true;
+        checkInput("#fname");
+        checkInput("#lname")
+        checkInput("#bsn")
+        checkInput("#date")
+        checkInput("#zip")
+        checkInput("#street")
+        checkInput("#city")
+        checkInput("#number")
+        checkInput("#email")
+        checkInput("#pw")
+        checkBirthDate()
+        checkEmail()
+        checkNoNumbers()
+        if ((checkInput("#fname") && checkInput("#lname") && checkInput("#bsn") && checkInput("#date") &&
+                checkInput("#zip") && checkInput("#street") && checkInput("#city") && checkInput("#number") &&
+                checkInput("#email") && checkInput("#pw") && checkBirthDate() && checkEmail() && checkNoNumbers()) === true)  {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     for (let i = 0; i < inputFields.length; i++) {
-        inputFields[i].addEventListener("click", () => {
+        inputFields[i].addEventListener("mousedown", () => {
             inputFields[i].style.backgroundColor = blue;
         })
     }
@@ -160,6 +163,8 @@ function register() {
         }
         if (!/^[a-zA-Z]*$/g.test(lname.value)) {
             lname.style.backgroundColor = red;
+        } else {
+            return true;
         }
     }
 
