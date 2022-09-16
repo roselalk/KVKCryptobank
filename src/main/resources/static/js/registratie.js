@@ -54,7 +54,7 @@ function register() {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
         console.log(raw)
-        location.href = "../html/login.html";
+        location.href = "../html/succes.html";
     } else {
         console.log("Did not pass checkAllInput()")
     }

@@ -3,6 +3,7 @@ package com.example.kamervankrypto.utils;
 public enum ExceptionMessage {
     INVALID_TOKEN("Invalid token!"),
     INVALID_LOGIN_CREDENTIALS("Email en wachtwoord matchen niet!"),
+    LOGIN_SUCCESS("Login succesvol"),
     TRADER_NOT_FOUND("Trader not found!"),
     ASSET_NOT_FOUND("Asset not found!"),
     BANK_ACCOUNT_NOT_FOUND("Bank account not found!"),
