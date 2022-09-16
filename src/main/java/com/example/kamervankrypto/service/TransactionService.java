@@ -2,8 +2,8 @@ package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Trader;
 import com.example.kamervankrypto.model.Transaction;
-import com.example.kamervankrypto.repository.TransactionDAO;
-import com.example.kamervankrypto.repository.TransactionRepository;
+import com.example.kamervankrypto.repository.Transaction.TransactionDAO;
+import com.example.kamervankrypto.repository.Transaction.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

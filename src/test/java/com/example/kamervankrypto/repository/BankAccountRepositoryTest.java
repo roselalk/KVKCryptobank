@@ -2,6 +2,8 @@ package com.example.kamervankrypto.repository;
 
 import com.example.kamervankrypto.model.BankAccount;
 import com.example.kamervankrypto.model.Trader;
+import com.example.kamervankrypto.repository.BankAccount.BankAccountDAO;
+import com.example.kamervankrypto.repository.BankAccount.BankAccountRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

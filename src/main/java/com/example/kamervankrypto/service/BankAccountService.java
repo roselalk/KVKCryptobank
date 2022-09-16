@@ -3,8 +3,8 @@ package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.BankAccount;
 import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.BankAccountDAO;
-import com.example.kamervankrypto.repository.BankAccountRepository;
+import com.example.kamervankrypto.repository.BankAccount.BankAccountDAO;
+import com.example.kamervankrypto.repository.BankAccount.BankAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

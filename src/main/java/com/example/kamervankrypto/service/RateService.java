@@ -1,7 +1,7 @@
 package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Rate;
-import com.example.kamervankrypto.repository.RateDAO;
+import com.example.kamervankrypto.repository.Rate.RateDAO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

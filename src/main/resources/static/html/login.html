@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Login CryptoBank</title>
+    <link href="../css/main.css" rel="stylesheet"/>
+    <script src="../js/login.js" defer></script>
+</head>
+<header>
+    <div class="flex-container">
+        <div class="header-logo">
+            <img src="../images/logo-transparent.png" alt="logo" style="height: 48px">
+        </div>
+        <!--        Header-text leaves space for feedback to users.-->
+        <h1 class="header-text"></h1>
+        <!--        Header-functions can contain functions like buttons.-->
+    </div>
+</header>
+
+<body>
+<div class=background-image>
+    <div class="grid-container">
+        <div class="grid-item">
+            <div class="box">
+                <div class="box-header">
+                    <h3>Log in met uw gegevens:</h3>
+                </div>
+                <div class="box-body">
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <p>
+                                <label name="gebruikersnaam">E-mailadres:</label>
+                            </p>
+                        </div>
+                        <div class="flex-item-right">
+                            <input id="email" type="text"/>
+                        </div>
+                    </div>
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <p>
+                                <label name="password">Wachtwoord:</label>
+                            </p>
+                        </div>
+                        <div class="flex-item-right">
+                            <input type="password" id="password"/>
+                            <input type="checkbox" id="passwordVisibility">
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <div class="flex-container">
+                        <div class="flex-item-left">
+                            <button class="button-block-green" id="buttonRegister" type="register"> Registreren</button>
+                        </div>
+                        <div class="flex-item-right">
+                            <button class="button-block-green" id="buttonLogin" type="submit"> Inloggen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2022, Kamer van Krypto
+    </div>
+</div>
+</body>
+</html>

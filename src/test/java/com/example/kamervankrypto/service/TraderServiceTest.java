@@ -1,7 +1,6 @@
 package com.example.kamervankrypto.service;
 
 import com.example.kamervankrypto.model.Trader;
-import com.example.kamervankrypto.repository.JdbcTraderDAO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
